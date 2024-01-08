@@ -3,6 +3,9 @@ exports_files([
     "hellos",
     "more-byes",
     "more-hellos",
+    "Foo.thrift",
+    "Bar.thrift",
+    "Baz.thrift",
 ])
 
 genrule(
