@@ -127,7 +127,6 @@ ARTIFACT_IDS = [
     "io_bazel_rules_scala_scala_compiler",
     "io_bazel_rules_scala_scala_reflect",
     "io_bazel_rules_scala_scala_xml",
-    "io_bazel_rules_scala_scala_parser_combinators",
     "org_scalameta_semanticdb_scalac",
 ] if SCALA_MAJOR_VERSION.startswith("2") else [
     "io_bazel_rules_scala_scala_library",
