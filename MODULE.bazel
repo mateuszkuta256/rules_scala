@@ -1,1 +1,3 @@
 module(name = "io_bazel_rules_scala")
+
+bazel_dep(name = "bazel_skylib", version = "1.4.1")
