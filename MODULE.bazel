@@ -103,6 +103,16 @@ def scala_deps():
     use_repo(scala_deps, "com_google_protobuf_protobuf_java")
     use_repo(scala_deps, "com_geirsson_metaconfig_core")
     use_repo(scala_deps, "com_geirsson_metaconfig_typesafe_config")
+    use_repo(scala_deps, "com_twitter__scalding_date")
+    use_repo(scala_deps, "com_google_guava_guava_21_0_with_file")
+    use_repo(scala_deps, "com_github_jnr_jffi_native")
+    use_repo(scala_deps, "org_apache_commons_commons_lang_3_5")
+    use_repo(scala_deps, "com_google_guava_guava_21_0")
+    use_repo(scala_deps, "org_springframework_spring_core")
+    use_repo(scala_deps, "org_springframework_spring_tx")
+    use_repo(scala_deps, "org_typelevel_kind_projector")
+    use_repo(scala_deps, "org_typelevel__cats_core")
+
     if SCALA_VERSION.startswith("2"):
         scala_2_deps()
         if SCALA_VERSION.startswith("2.13"):
