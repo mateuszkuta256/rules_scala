@@ -55,6 +55,18 @@ def scala_deps():
     use_repo(scala_deps, "scala_proto_rules_disruptor")
     use_repo(scala_deps, "scala_proto_rules_opencensus_impl_core")
     use_repo(scala_deps, "scala_proto_rules_opencensus_contrib_grpc_metrics")
+    use_repo(scala_deps, "io_bazel_rules_scala_scalatest")
+    use_repo(scala_deps, "io_bazel_rules_scala_scalatest_compatible")
+    use_repo(scala_deps, "io_bazel_rules_scala_scalatest_core")
+    use_repo(scala_deps, "io_bazel_rules_scala_scalatest_featurespec")
+    use_repo(scala_deps, "io_bazel_rules_scala_scalatest_flatspec")
+    use_repo(scala_deps, "io_bazel_rules_scala_scalatest_freespec")
+    use_repo(scala_deps, "io_bazel_rules_scala_scalatest_funsuite")
+    use_repo(scala_deps, "io_bazel_rules_scala_scalatest_funspec")
+    use_repo(scala_deps, "io_bazel_rules_scala_scalatest_matchers_core")
+    use_repo(scala_deps, "io_bazel_rules_scala_scalatest_shouldmatchers")
+    use_repo(scala_deps, "io_bazel_rules_scala_scalatest_mustmatchers")
+    use_repo(scala_deps, "io_bazel_rules_scala_scalactic")
     if SCALA_VERSION.startswith("2"):
         scala_2_deps()
     if SCALA_VERSION.startswith("3"):
