@@ -2,10 +2,6 @@ workspace(name = "io_bazel_rules_scala")
 
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
-load("//scala:scala.bzl", "rules_scala_toolchain_deps_repositories")
-
-rules_scala_toolchain_deps_repositories(fetch_sources = True)
-
 load("@rules_proto//proto:repositories.bzl", "rules_proto_dependencies", "rules_proto_toolchains")
 
 # Declares @com_google_protobuf//:protoc pointing to released binary

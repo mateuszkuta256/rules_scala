@@ -1,5 +1,7 @@
 module(name = "io_bazel_rules_scala")
 
+SCALA_VERSION = "2.12.18"
+
 bazel_dep(name = "bazel_skylib", version = "1.4.1")
 bazel_dep(name = "rules_go", version = "0.38.1")
 bazel_dep(name = "gazelle", version = "0.30.0")
@@ -8,11 +10,30 @@ bazel_dep(name = "rules_java", version = "5.5.0")
 bazel_dep(name = "rules_proto", version = "5.3.0-21.7")
 
 scala_config_dep = use_extension("//:extensions/scala_config_ext.bzl", "scala_config_dep")
-use_repo(scala_config_dep, "io_bazel_rules_scala_config")
+use_repo(scala_config_dep, "io_bazel_rules_scala_config")   #TODO somehow pass SCALA_VERSION here
 
 def scala_deps():
     scala_deps = use_extension("//:extensions/scala_ext.bzl", "scala_deps")
     use_repo(scala_deps, "scala_compiler_source")
+    use_repo(scala_deps, "io_bazel_rules_scala_scala_library")
+    use_repo(scala_deps, "io_bazel_rules_scala_scala_compiler")
+    use_repo(scala_deps, "io_bazel_rules_scala_scala_xml")
+    use_repo(scala_deps, "io_bazel_rules_scala_scala_parser_combinators")
+    if SCALA_VERSION.startswith("2"):
+        scala_2_deps()
+    if SCALA_VERSION.startswith("3"):
+        scala_3_deps()
 
+def scala_2_deps():
+    scala_2_deps = use_extension("//:extensions/scala_2_ext.bzl", "scala_2_deps")
+    use_repo(scala_2_deps, "org_scalameta_semanticdb_scalac")
+    use_repo(scala_2_deps, "io_bazel_rules_scala_scala_reflect")
+
+def scala_3_deps():
+    scala_3_deps = use_extension("//:extensions/scala_3_ext.bzl", "scala_3_deps")
+    use_repo(scala_3_deps, "io_bazel_rules_scala_scala_interfaces")
+    use_repo(scala_3_deps, "io_bazel_rules_scala_scala_tasty_core")
+    use_repo(scala_3_deps, "io_bazel_rules_scala_scala_asm")
+    use_repo(scala_3_deps, "io_bazel_rules_scala_scala_library_2")
 
 scala_deps()
