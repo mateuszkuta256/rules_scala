@@ -67,6 +67,13 @@ def scala_deps():
     use_repo(scala_deps, "io_bazel_rules_scala_scalatest_shouldmatchers")
     use_repo(scala_deps, "io_bazel_rules_scala_scalatest_mustmatchers")
     use_repo(scala_deps, "io_bazel_rules_scala_scalactic")
+    use_repo(scala_deps, "io_bazel_rules_scala_org_specs2_specs2_common")
+    use_repo(scala_deps, "io_bazel_rules_scala_org_specs2_specs2_core")
+    use_repo(scala_deps, "io_bazel_rules_scala_org_specs2_specs2_fp")
+    use_repo(scala_deps, "io_bazel_rules_scala_org_specs2_specs2_matcher")
+    use_repo(scala_deps, "io_bazel_rules_scala_junit_junit")
+    use_repo(scala_deps, "io_bazel_rules_scala_org_hamcrest_hamcrest_core")
+    use_repo(scala_deps, "io_bazel_rules_scala_org_specs2_specs2_junit")
     if SCALA_VERSION.startswith("2"):
         scala_2_deps()
     if SCALA_VERSION.startswith("3"):
@@ -88,3 +95,4 @@ scala_deps()
 
 register_toolchains("@io_bazel_rules_scala//jmh:jmh_toolchain")
 register_toolchains("@io_bazel_rules_scala//scala_proto:default_deps_toolchain")
+register_toolchains("//testing:testing_toolchain")

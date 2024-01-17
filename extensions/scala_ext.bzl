@@ -178,5 +178,12 @@ def _scala_deps_impl(ctx):
     repository(id = "io_bazel_rules_scala_scalatest_shouldmatchers")
     repository(id = "io_bazel_rules_scala_scalatest_mustmatchers")
     repository(id = "io_bazel_rules_scala_scalactic")
+    repository(id = "io_bazel_rules_scala_org_specs2_specs2_common")
+    repository(id = "io_bazel_rules_scala_org_specs2_specs2_core")
+    repository(id = "io_bazel_rules_scala_org_specs2_specs2_fp")
+    repository(id = "io_bazel_rules_scala_org_specs2_specs2_matcher")
+    repository(id = "io_bazel_rules_scala_junit_junit")
+    repository(id = "io_bazel_rules_scala_org_hamcrest_hamcrest_core")
+    repository(id = "io_bazel_rules_scala_org_specs2_specs2_junit")
 
 scala_deps = module_extension(implementation = _scala_deps_impl)
