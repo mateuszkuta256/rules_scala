@@ -47,8 +47,6 @@ local_repository(
     path = "third_party/test/example_external_workspace",
 )
 
-register_toolchains("@io_bazel_rules_scala//test/proto:scalapb_toolchain")
-
 load("//scala:scala_maven_import_external.bzl", "java_import_external")
 
 # bazel's java_import_external has been altered in rules_scala to be a macro based on jvm_import_external
