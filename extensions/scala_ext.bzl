@@ -1,5 +1,6 @@
 load("//third_party/repositories:repositories.bzl", "repository")
 load("//scala:scala_maven_import_external.bzl", "java_import_external")
+load("//private:format.bzl", "format_repositories")
 load(
     "@io_bazel_rules_scala//scala/private:macros/scala_repositories.bzl",
     _dt_patched_compiler_setup = "dt_patched_compiler_setup",
@@ -199,5 +200,7 @@ def _scala_deps_impl(ctx):
         neverlink = True,
         testonly_ = True,
     )
+    ## Linting
+    format_repositories()
 
 scala_deps = module_extension(implementation = _scala_deps_impl)

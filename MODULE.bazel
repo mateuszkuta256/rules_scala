@@ -75,6 +75,9 @@ def scala_deps():
     use_repo(scala_deps, "io_bazel_rules_scala_org_hamcrest_hamcrest_core")
     use_repo(scala_deps, "io_bazel_rules_scala_org_specs2_specs2_junit")
     use_repo(scala_deps, "org_apache_commons_commons_lang_3_5_without_file")
+    use_repo(scala_deps, "io_bazel")
+    use_repo(scala_deps, "google_java_format")
+    use_repo(scala_deps, "com_github_google_yapf")
     if SCALA_VERSION.startswith("2"):
         scala_2_deps()
     if SCALA_VERSION.startswith("3"):

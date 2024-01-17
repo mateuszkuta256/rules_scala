@@ -47,12 +47,6 @@ local_repository(
     path = "third_party/test/example_external_workspace",
 )
 
-## Linting
-
-load("//private:format.bzl", "format_repositories")
-
-format_repositories()
-
 # Explicitly pull in a different (newer) version of rules_java for remote jdks
 rules_java_extra_version = "5.1.0"
 
