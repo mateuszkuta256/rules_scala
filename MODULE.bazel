@@ -19,6 +19,12 @@ def scala_deps():
     use_repo(scala_deps, "io_bazel_rules_scala_scala_compiler")
     use_repo(scala_deps, "io_bazel_rules_scala_scala_xml")
     use_repo(scala_deps, "io_bazel_rules_scala_scala_parser_combinators")
+    use_repo(scala_deps, "io_bazel_rules_scala_org_openjdk_jmh_jmh_core")
+    use_repo(scala_deps, "io_bazel_rules_scala_org_openjdk_jmh_jmh_generator_asm")
+    use_repo(scala_deps, "io_bazel_rules_scala_org_openjdk_jmh_jmh_generator_reflection")
+    use_repo(scala_deps, "io_bazel_rules_scala_org_ows2_asm_asm")
+    use_repo(scala_deps, "io_bazel_rules_scala_net_sf_jopt_simple_jopt_simple")
+    use_repo(scala_deps, "io_bazel_rules_scala_org_apache_commons_commons_math3")
     if SCALA_VERSION.startswith("2"):
         scala_2_deps()
     if SCALA_VERSION.startswith("3"):
@@ -37,3 +43,5 @@ def scala_3_deps():
     use_repo(scala_3_deps, "io_bazel_rules_scala_scala_library_2")
 
 scala_deps()
+
+register_toolchains("@io_bazel_rules_scala//jmh:jmh_toolchain")
