@@ -46,5 +46,125 @@ def _scala_deps_impl(ctx):
         id = "io_bazel_rules_scala_org_apache_commons_commons_math3",
         fetch_sources = False,
     )
+    repository(
+        id = "scala_proto_rules_scalapb_plugin",
+        fetch_sources = False,
+    )
+    repository(
+        id = "scala_proto_rules_protoc_bridge",
+        fetch_sources = False,
+    )
+    repository(
+        id = "scala_proto_rules_scalapb_runtime",
+        fetch_sources = False,
+    )
+    repository(
+        id = "scala_proto_rules_scalapb_runtime_grpc",
+        fetch_sources = False,
+    )
+    repository(
+        id = "scala_proto_rules_scalapb_lenses",
+        fetch_sources = False,
+    )
+    repository(
+        id = "scala_proto_rules_scalapb_fastparse",
+        fetch_sources = False,
+    )
+    repository(
+        id = "scala_proto_rules_grpc_core",
+        fetch_sources = False,
+    )
+    repository(
+        id = "scala_proto_rules_grpc_api",
+        fetch_sources = False,
+    )
+    repository(
+        id = "scala_proto_rules_grpc_stub",
+        fetch_sources = False,
+    )
+    repository(
+        id = "scala_proto_rules_grpc_protobuf",
+        fetch_sources = False,
+    )
+    repository(
+        id = "scala_proto_rules_grpc_netty",
+        fetch_sources = False,
+    )
+    repository(
+        id = "scala_proto_rules_grpc_context",
+        fetch_sources = False,
+    )
+    repository(
+        id = "scala_proto_rules_perfmark_api",
+        fetch_sources = False,
+    )
+    repository(
+        id = "scala_proto_rules_guava",
+        fetch_sources = False,
+    )
+    repository(
+        id = "scala_proto_rules_google_instrumentation",
+        fetch_sources = False,
+    )
+    repository(
+        id = "scala_proto_rules_netty_codec",
+        fetch_sources = False,
+    )
+    repository(
+        id = "scala_proto_rules_netty_codec_http",
+        fetch_sources = False,
+    )
+    repository(
+        id = "scala_proto_rules_netty_codec_socks",
+        fetch_sources = False,
+    )
+    repository(
+        id = "scala_proto_rules_netty_codec_http2",
+        fetch_sources = False,
+    )
+    repository(
+        id = "scala_proto_rules_netty_handler",
+        fetch_sources = False,
+    )
+    repository(
+        id = "scala_proto_rules_netty_buffer",
+        fetch_sources = False,
+    )
+    repository(
+        id = "scala_proto_rules_netty_transport",
+        fetch_sources = False,
+    )
+    repository(
+        id = "scala_proto_rules_netty_resolver",
+        fetch_sources = False,
+    )
+    repository(
+        id = "scala_proto_rules_netty_common",
+        fetch_sources = False,
+    )
+    repository(
+        id = "scala_proto_rules_netty_handler_proxy",
+        fetch_sources = False,
+    )
+    repository(
+        id = "scala_proto_rules_opencensus_api",
+        fetch_sources = False,
+    )
+    repository(
+        id = "scala_proto_rules_opencensus_impl",
+        fetch_sources = False,
+    )
+    repository(
+        id = "scala_proto_rules_disruptor",
+        fetch_sources = False,
+    )
+    repository(
+        id = "scala_proto_rules_opencensus_impl_core",
+        fetch_sources = False,
+    )
+    repository(
+        id = "scala_proto_rules_opencensus_contrib_grpc_metrics",
+        fetch_sources = False,
+    )
 
 scala_deps = module_extension(implementation = _scala_deps_impl)
