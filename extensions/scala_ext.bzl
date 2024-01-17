@@ -1,4 +1,5 @@
 load("//third_party/repositories:repositories.bzl", "repository")
+load("//scala:scala_maven_import_external.bzl", "java_import_external")
 load(
     "@io_bazel_rules_scala//scala/private:macros/scala_repositories.bzl",
     _dt_patched_compiler_setup = "dt_patched_compiler_setup",
@@ -185,5 +186,18 @@ def _scala_deps_impl(ctx):
     repository(id = "io_bazel_rules_scala_junit_junit")
     repository(id = "io_bazel_rules_scala_org_hamcrest_hamcrest_core")
     repository(id = "io_bazel_rules_scala_org_specs2_specs2_junit")
+    # bazel's java_import_external has been altered in rules_scala to be a macro based on jvm_import_external
+    # in order to allow for other jvm-language imports (e.g. scala_import)
+    # the 3rd-party dependency below is using the java_import_external macro
+    # in order to make sure no regression with the original java_import_external
+    java_import_external(
+        name = "org_apache_commons_commons_lang_3_5_without_file",
+        generated_linkable_rule_name = "linkable_org_apache_commons_commons_lang_3_5_without_file",
+        jar_sha256 = "8ac96fc686512d777fca85e144f196cd7cfe0c0aec23127229497d1a38ff651c",
+        jar_urls = ["https://repo.maven.apache.org/maven2/org/apache/commons/commons-lang3/3.5/commons-lang3-3.5.jar"],
+        licenses = ["notice"],  # Apache 2.0
+        neverlink = True,
+        testonly_ = True,
+    )
 
 scala_deps = module_extension(implementation = _scala_deps_impl)
