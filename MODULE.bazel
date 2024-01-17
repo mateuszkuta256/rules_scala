@@ -7,7 +7,9 @@ bazel_dep(name = "rules_go", version = "0.38.1")
 bazel_dep(name = "gazelle", version = "0.30.0")
 bazel_dep(name = "rules_cc", version = "0.0.6")
 bazel_dep(name = "rules_java", version = "5.5.0")
+bazel_dep(name = "rules_python", version = "0.28.0")
 bazel_dep(name = "rules_proto", version = "5.3.0-21.7")
+bazel_dep(name = "protobuf", version = "21.7", repo_name = "com_google_protobuf")
 
 scala_config_dep = use_extension("//:extensions/scala_config_ext.bzl", "scala_config_dep")
 use_repo(scala_config_dep, "io_bazel_rules_scala_config")   #TODO somehow pass SCALA_VERSION here

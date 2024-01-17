@@ -2,15 +2,6 @@ workspace(name = "io_bazel_rules_scala")
 
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
-load("@rules_proto//proto:repositories.bzl", "rules_proto_dependencies", "rules_proto_toolchains")
-
-# Declares @com_google_protobuf//:protoc pointing to released binary
-# This should stop building protoc during bazel build
-# See https://github.com/bazelbuild/rules_proto/pull/36
-rules_proto_dependencies()
-
-rules_proto_toolchains()
-
 load("//scala:scala_cross_version.bzl", "default_maven_server_urls")
 load("//twitter_scrooge:twitter_scrooge.bzl", "twitter_scrooge")
 
