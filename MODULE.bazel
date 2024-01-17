@@ -83,15 +83,43 @@ def scala_deps():
     use_repo(scala_deps, "remote_jdk8_macos")
     use_repo(scala_deps, "remote_jdk8_windows")
     use_repo(scala_deps, "remote_jdk8_linux")
+    use_repo(scala_deps, "org_scalameta_common")
+    use_repo(scala_deps, "org_scalameta_fastparse")
+    use_repo(scala_deps, "org_scalameta_fastparse_utils")
+    use_repo(scala_deps, "org_scalameta_parsers")
+    use_repo(scala_deps, "org_scalameta_scalafmt_core")
+    use_repo(scala_deps, "org_scalameta_scalameta")
+    use_repo(scala_deps, "org_scalameta_trees")
+    use_repo(scala_deps, "org_typelevel_paiges_core")
+    use_repo(scala_deps, "com_typesafe_config")
+    use_repo(scala_deps, "org_scala_lang_scalap")
+    use_repo(scala_deps, "com_thesamet_scalapb_lenses")
+    use_repo(scala_deps, "com_thesamet_scalapb_scalapb_runtime")
+    use_repo(scala_deps, "com_lihaoyi_fansi")
+    use_repo(scala_deps, "com_lihaoyi_fastparse")
+    use_repo(scala_deps, "org_scala_lang_modules_scala_collection_compat")
+    use_repo(scala_deps, "com_lihaoyi_pprint")
+    use_repo(scala_deps, "com_lihaoyi_sourcecode")
+    use_repo(scala_deps, "com_google_protobuf_protobuf_java")
+    use_repo(scala_deps, "com_geirsson_metaconfig_core")
+    use_repo(scala_deps, "com_geirsson_metaconfig_typesafe_config")
     if SCALA_VERSION.startswith("2"):
         scala_2_deps()
+        if SCALA_VERSION.startswith("2.13"):
+            scala_2_13_deps()
     if SCALA_VERSION.startswith("3"):
         scala_3_deps()
+        if SCALA_VERSION.startswith("3.1"):
+            scala_3_1_deps()
 
 def scala_2_deps():
     scala_2_deps = use_extension("//:extensions/scala_2_ext.bzl", "scala_2_deps")
     use_repo(scala_2_deps, "org_scalameta_semanticdb_scalac")
     use_repo(scala_2_deps, "io_bazel_rules_scala_scala_reflect")
+
+def scala_2_13_deps():
+    scala_2_13_deps = use_extension("//:extensions/scala_2_13_ext.bzl", "scala_2_13_deps")
+    use_repo(scala_2_13_deps, "io_bazel_rules_scala_scala_parallel_collections")
 
 def scala_3_deps():
     scala_3_deps = use_extension("//:extensions/scala_3_ext.bzl", "scala_3_deps")
@@ -100,6 +128,10 @@ def scala_3_deps():
     use_repo(scala_3_deps, "io_bazel_rules_scala_scala_asm")
     use_repo(scala_3_deps, "io_bazel_rules_scala_scala_library_2")
 
+def scala_3_1_deps():
+    scala_3_1_deps = use_extension("//:extensions/scala_3_1_ext.bzl", "scala_3_1_deps")
+    use_repo(scala_3_1_deps, "io_bazel_rules_scala_scala_parallel_collections")
+
 scala_deps()
 
 register_toolchains("@io_bazel_rules_scala//jmh:jmh_toolchain")
@@ -107,3 +139,4 @@ register_toolchains("@io_bazel_rules_scala//scala_proto:default_deps_toolchain")
 register_toolchains("//testing:testing_toolchain")
 register_toolchains("@io_bazel_rules_scala//scala:unused_dependency_checker_error_toolchain")
 register_toolchains("@io_bazel_rules_scala//test/proto:scalapb_toolchain")
+register_toolchains("@io_bazel_rules_scala//scala/scalafmt:scalafmt_toolchain")

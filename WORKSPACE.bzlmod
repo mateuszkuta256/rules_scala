@@ -7,11 +7,9 @@ load("//twitter_scrooge:twitter_scrooge.bzl", "twitter_scrooge")
 
 twitter_scrooge()
 
-load("//scala/scalafmt:scalafmt_repositories.bzl", "scalafmt_default_config", "scalafmt_repositories")
+load("//scala/scalafmt:scalafmt_repositories.bzl", "scalafmt_default_config")
 
 scalafmt_default_config()
-
-scalafmt_repositories()
 
 MAVEN_SERVER_URLS = default_maven_server_urls()
 
