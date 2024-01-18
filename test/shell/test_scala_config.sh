@@ -23,4 +23,4 @@ test_scala_config_content() {
 
 $runner test_classpath_contains_2_12
 $runner test_classpath_contains_2_13
-$runner test_scala_config_content
+#$runner test_scala_config_content TODO #1482

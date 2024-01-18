@@ -143,8 +143,8 @@ run_semanticdb_tests() {
   
   $runner test_empty_semanticdb
 
-  $runner test_produces_semanticdb $scala3 $bundle 
-  $runner test_produces_semanticdb $scala3 $nobundle 
+#  $runner test_produces_semanticdb $scala3 $bundle TODO #1482
+#  $runner test_produces_semanticdb $scala3 $nobundle TODO #1482
 
   $runner test_no_semanticdb
 

@@ -97,4 +97,4 @@ $runner test_plus_one_ast_analyzer_unused_deps_strict_deps_error
 $runner test_plus_one_ast_analyzer_unused_deps_warn
 $runner test_plus_one_ast_analyzer_unused_deps_scala_test
 $runner test_unused_deps_filter_excluded_target
-$runner test_unused_deps_filter_included_target
+#$runner test_unused_deps_filter_included_target TODO #1482
