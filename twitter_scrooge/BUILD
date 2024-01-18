@@ -18,10 +18,10 @@ declare_deps_provider(
     deps_id = "aspect_compile_classpath",
     visibility = ["//visibility:public"],
     deps = [
-        "//external:io_bazel_rules_scala/dependency/thrift/javax_annotation_api",
-        "//external:io_bazel_rules_scala/dependency/thrift/libthrift",
-        "//external:io_bazel_rules_scala/dependency/thrift/scrooge_core",
-        "//external:io_bazel_rules_scala/dependency/thrift/util_core",
+        "@io_bazel_rules_scala_javax_annotation_api",
+        "@libthrift",
+        "@io_bazel_rules_scala_scrooge_core",
+        "@io_bazel_rules_scala_util_core",
         "//scala/private/toolchain_deps:scala_library_classpath",
     ],
 )
@@ -31,8 +31,8 @@ declare_deps_provider(
     deps_id = "compile_classpath",
     visibility = ["//visibility:public"],
     deps = [
-        "//external:io_bazel_rules_scala/dependency/thrift/libthrift",
-        "//external:io_bazel_rules_scala/dependency/thrift/scrooge_core",
+        "@libthrift",
+        "@io_bazel_rules_scala_scrooge_core",
         "//scala/private/toolchain_deps:scala_library_classpath",
     ],
 )
@@ -42,7 +42,7 @@ declare_deps_provider(
     deps_id = "scrooge_generator_classpath",
     visibility = ["//visibility:public"],
     deps = [
-        "//external:io_bazel_rules_scala/dependency/thrift/scrooge_generator",
+        "@io_bazel_rules_scala_scrooge_generator",
     ],
 )
 
@@ -51,11 +51,11 @@ declare_deps_provider(
     deps_id = "compiler_classpath",
     visibility = ["//visibility:public"],
     deps = [
-        "//external:io_bazel_rules_scala/dependency/thrift/mustache",
-        "//external:io_bazel_rules_scala/dependency/thrift/scopt",
-        "//external:io_bazel_rules_scala/dependency/thrift/scrooge_generator",
-        "//external:io_bazel_rules_scala/dependency/thrift/util_core",
-        "//external:io_bazel_rules_scala/dependency/thrift/util_logging",
+        "@io_bazel_rules_scala_mustache",
+        "@io_bazel_rules_scala_scopt",
+        "@io_bazel_rules_scala_scrooge_generator",
+        "@io_bazel_rules_scala_util_core",
+        "@io_bazel_rules_scala_util_logging",
         "//scala/private/toolchain_deps:parser_combinators",
     ],
 )
