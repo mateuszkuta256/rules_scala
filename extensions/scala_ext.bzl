@@ -276,5 +276,14 @@ def _scala_deps_impl(ctx):
         name = "rbe_default",
         toolchain = "ubuntu2004-bazel-java11",
     )
+    repository(id = "io_bazel_rules_scala_mustache", fetch_sources = False)
+    repository(id = "io_bazel_rules_scala_guava", fetch_sources = False)
+    repository(id = "io_bazel_rules_scala_javax_annotation_api", fetch_sources = False)
+    repository(id = "io_bazel_rules_scala_scopt", fetch_sources = False)
+    repository(id = "libthrift", fetch_sources = False)
+    repository(id = "io_bazel_rules_scala_scrooge_core", fetch_sources = False)
+    repository(id = "io_bazel_rules_scala_scrooge_generator", fetch_sources = False)
+    repository(id = "io_bazel_rules_scala_util_core", fetch_sources = False)
+    repository(id = "io_bazel_rules_scala_util_logging", fetch_sources = False)
 
 scala_deps = module_extension(implementation = _scala_deps_impl)
