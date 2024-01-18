@@ -11,8 +11,14 @@ bazel_dep(name = "rules_python", version = "0.28.0")
 bazel_dep(name = "rules_proto", version = "5.3.0-21.7")
 bazel_dep(name = "protobuf", version = "21.7", repo_name = "com_google_protobuf")
 
-scala_config_dep = use_extension("//:extensions/scala_config_ext.bzl", "scala_config_dep")
-use_repo(scala_config_dep, "io_bazel_rules_scala_config")   #TODO somehow pass SCALA_VERSION here
+use_repo(
+    use_extension("//:extensions/scala_config_ext.bzl", "scala_config_dep"),
+    "io_bazel_rules_scala_config" #TODO somehow pass SCALA_VERSION here
+)
+use_repo(
+    use_extension("//:extensions/bazelci_ext.bzl", "bazelci_dep"),
+    "bazelci_rules"
+)
 
 def scala_deps():
     scala_deps = use_extension("//:extensions/scala_ext.bzl", "scala_deps")
@@ -112,6 +118,7 @@ def scala_deps():
     use_repo(scala_deps, "org_springframework_spring_tx")
     use_repo(scala_deps, "org_typelevel_kind_projector")
     use_repo(scala_deps, "org_typelevel__cats_core")
+    use_repo(scala_deps, "rbe_default")
 
     if SCALA_VERSION.startswith("2"):
         scala_2_deps()

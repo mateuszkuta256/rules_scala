@@ -2,6 +2,7 @@ load("//third_party/repositories:repositories.bzl", "repository")
 load("//scala:scala_maven_import_external.bzl", "java_import_external")
 load("//private:format.bzl", "format_repositories")
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
+load("@bazelci_rules//:rbe_repo.bzl", "rbe_preconfig")
 load(
     "@io_bazel_rules_scala//scala/private:macros/scala_repositories.bzl",
     _dt_patched_compiler_setup = "dt_patched_compiler_setup",
@@ -271,5 +272,9 @@ def _scala_deps_impl(ctx):
     repository(id = "org_typelevel_kind_projector", fetch_sources = False)
     # For testing that we don't include sources jars to the classpath
     repository(id = "org_typelevel__cats_core", fetch_sources = False)
+    rbe_preconfig(
+        name = "rbe_default",
+        toolchain = "ubuntu2004-bazel-java11",
+    )
 
 scala_deps = module_extension(implementation = _scala_deps_impl)
