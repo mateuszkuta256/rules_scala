@@ -1,10 +1,5 @@
 workspace(name = "io_bazel_rules_scala")
 
-# needed for the cross repo proto test
-load("//test/proto_cross_repo_boundary:repo.bzl", "proto_cross_repo_boundary_repository")
-
-proto_cross_repo_boundary_repository()
-
 new_local_repository(
     name = "test_new_local_repo",
     build_file_content =

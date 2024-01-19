@@ -130,6 +130,7 @@ def scala_deps():
     use_repo(scala_deps, "io_bazel_rules_scala_util_logging")
     use_repo(scala_deps, "example_external_workspace")
     use_repo(scala_deps, "scalafmt_default")
+    use_repo(scala_deps, "proto_cross_repo_boundary")
 
     if SCALA_VERSION.startswith("2"):
         scala_2_deps()
