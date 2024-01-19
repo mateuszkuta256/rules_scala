@@ -276,7 +276,7 @@ scala_repl(
 
 scala_library(
     name = "jar_export",
-    exports = ["@org_typelevel__cats_core"],
+    exports = ["@org_typelevel__cats_core//jar"],
 )
 
 #Mix java scala

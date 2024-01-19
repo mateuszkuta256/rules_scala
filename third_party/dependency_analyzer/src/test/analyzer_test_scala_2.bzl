@@ -63,14 +63,14 @@ def analyzer_tests_scala_2():
             "io/bazel/rulesscala/dependencyanalyzer/StrictDepsTest.scala",
         ],
         jvm_flags = common_jvm_flags + [
-            "-Dguava.jar.location=$(rootpath @com_google_guava_guava_21_0_with_file)",
+            "-Dguava.jar.location=$(rootpath @com_google_guava_guava_21_0_with_file//jar)",
             "-Dapache.commons.jar.location=$(location @org_apache_commons_commons_lang_3_5_without_file//:linkable_org_apache_commons_commons_lang_3_5_without_file)",
         ],
         unused_dependency_checker_mode = "off",
         deps = [
             "//third_party/dependency_analyzer/src/main:dependency_analyzer",
             "//third_party/utils/src/test:test_util",
-            "@com_google_guava_guava_21_0_with_file",
+            "@com_google_guava_guava_21_0_with_file//jar",
             "@io_bazel_rules_scala_scala_compiler",
             "@io_bazel_rules_scala_scala_library",
             "@io_bazel_rules_scala_scala_reflect",

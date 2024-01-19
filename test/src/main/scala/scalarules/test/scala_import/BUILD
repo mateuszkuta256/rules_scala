@@ -16,7 +16,7 @@ scala_import(
     name = "jffi_native_external",
     testonly = True,
     jars = [
-        "@com_github_jnr_jffi_native",
+        "@com_github_jnr_jffi_native//jar",
     ],
 )
 
@@ -49,7 +49,7 @@ scala_library(
     testonly = True,
     srcs = ["ReferCatsImplicits.scala"],
     # jvm_maven_import_external doesn't fetch source jars automatically
-    deps = ["@org_typelevel__cats_core"],
+    deps = ["@org_typelevel__cats_core//jar"],
 )
 
 ##Runtime deps
@@ -58,7 +58,7 @@ scala_import(
     testonly = True,
     jars = [],
     # jvm_maven_import_external doesn't fetch source jars automatically
-    deps = ["@org_typelevel__cats_core"],
+    deps = ["@org_typelevel__cats_core//jar"],
 )
 
 scala_import(

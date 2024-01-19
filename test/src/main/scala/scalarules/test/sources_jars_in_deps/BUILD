@@ -5,6 +5,6 @@ scala_library(
     testonly = True,
     srcs = ["ReferCatsImplicits.scala"],
     deps = [
-        "@org_typelevel__cats_core",
+        "@org_typelevel__cats_core//jar",
     ],
 )

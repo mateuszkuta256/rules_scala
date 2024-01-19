@@ -36,7 +36,7 @@ scala_library(
     srcs = [
         "B.scala",
     ],
-    deps = ["@com_google_guava_guava_21_0_with_file"],
+    deps = ["@com_google_guava_guava_21_0_with_file//jar"],
 )
 
 # tests if external jars are stamped with a correct label
