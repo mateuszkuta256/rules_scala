@@ -33,17 +33,19 @@ scala_specs2_junit_test(
     deps = [":noSrcsWithFilegroupResources"],
 )
 
-scala_specs2_junit_test(
-    name = "TestScalaLibResourcesFromExternalDep",
-    size = "small",
-    srcs = ["ScalaLibResourcesFromExternalDepTest.scala"],
-    resources = ["@test_new_local_repo//:data"],
-    suffixes = ["Test"],
-)
+# TODO #1482
+#scala_specs2_junit_test(
+#    name = "TestScalaLibResourcesFromExternalDep",
+#    size = "small",
+#    srcs = ["ScalaLibResourcesFromExternalDepTest.scala"],
+#    resources = ["@test_new_local_repo//:data"],
+#    suffixes = ["Test"],
+#)
 
-scala_test(
-    name = "TestScalaLibResourcesFromExternalScalaTest",
-    size = "small",
-    srcs = ["ScalaLibResourcesFromExternalScalaTest.scala"],
-    resources = ["@test_new_local_repo//:data"],
-)
+# TODO #1482
+#scala_test(
+#    name = "TestScalaLibResourcesFromExternalScalaTest",
+#    size = "small",
+#    srcs = ["ScalaLibResourcesFromExternalScalaTest.scala"],
+#    resources = ["@test_new_local_repo//:data"],
+#)

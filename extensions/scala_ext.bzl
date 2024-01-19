@@ -6,6 +6,7 @@ load("@bazelci_rules//:rbe_repo.bzl", "rbe_preconfig")
 load("//scala/scalafmt:scalafmt_repositories.bzl", "scalafmt_default_config")
 load(":extensions/extension_utils.bzl", "starlarkified_local_repository")
 load("//test/proto_cross_repo_boundary:repo.bzl", "proto_cross_repo_boundary_repository")
+load("//third_party/test/new_local_repo:repo.bzl", "test_new_local_repo")
 load(
     "@io_bazel_rules_scala//scala/private:macros/scala_repositories.bzl",
     _dt_patched_compiler_setup = "dt_patched_compiler_setup",
@@ -292,5 +293,6 @@ def _scala_deps_impl(ctx):
     scalafmt_default_config()
     # needed for the cross repo proto test
     proto_cross_repo_boundary_repository()
+    test_new_local_repo()
 
 scala_deps = module_extension(implementation = _scala_deps_impl)

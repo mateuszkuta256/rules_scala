@@ -1,14 +1,1 @@
-workspace(name = "io_bazel_rules_scala")
-
-new_local_repository(
-    name = "test_new_local_repo",
-    build_file_content =
-        """
-filegroup(
-    name = "data",
-    srcs = glob(["**/*.txt"]),
-    visibility = ["//visibility:public"],
-)
-""",
-    path = "third_party/test/new_local_repo",
-)
+# A completely empty WORKSPACE file to replace the original WORKSPACE content when enabling Bzlmod.
