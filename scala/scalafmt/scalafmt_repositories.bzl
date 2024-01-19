@@ -5,14 +5,26 @@ load(
 load("//third_party/repositories:repositories.bzl", "repositories")
 load("@io_bazel_rules_scala_config//:config.bzl", "SCALA_MAJOR_VERSION")
 
-def scalafmt_default_config(path = ".scalafmt.conf"):
+def _scalafmt_default_config_impl(repository_ctx):
+    config_file_path = repository_ctx.attr.config_file_path or str(repository_ctx.workspace_root) + "/.scalafmt.conf"
+    repository_ctx.file("config.conf", repository_ctx.read(config_file_path))
     build = []
     build.append("filegroup(")
     build.append("    name = \"config\",")
-    build.append("    srcs = [\"{}\"],".format(path))
+    build.append("    srcs = [\"config.conf\"],")
     build.append("    visibility = [\"//visibility:public\"],")
     build.append(")")
-    native.new_local_repository(name = "scalafmt_default", build_file_content = "\n".join(build), path = "")
+    repository_ctx.file("BUILD", "\n".join(build))
+
+_scalafmt_default_config = repository_rule(
+    implementation = _scalafmt_default_config_impl,
+    attrs = {
+            "config_file_path": attr.string()
+    },
+)
+
+def scalafmt_default_config(path = None):
+    _scalafmt_default_config(name = "scalafmt_default", config_file_path = path)
 
 def scalafmt_repositories(
         maven_servers = _default_maven_server_urls(),

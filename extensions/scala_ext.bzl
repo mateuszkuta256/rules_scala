@@ -3,6 +3,7 @@ load("//scala:scala_maven_import_external.bzl", "java_import_external")
 load("//private:format.bzl", "format_repositories")
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 load("@bazelci_rules//:rbe_repo.bzl", "rbe_preconfig")
+load("//scala/scalafmt:scalafmt_repositories.bzl", "scalafmt_default_config")
 load(":extensions/extension_utils.bzl", "starlarkified_local_repository")
 load(
     "@io_bazel_rules_scala//scala/private:macros/scala_repositories.bzl",
@@ -287,5 +288,6 @@ def _scala_deps_impl(ctx):
     repository(id = "io_bazel_rules_scala_util_core", fetch_sources = False)
     repository(id = "io_bazel_rules_scala_util_logging", fetch_sources = False)
     starlarkified_local_repository(name = "example_external_workspace", path = "third_party/test/example_external_workspace")
+    scalafmt_default_config()
 
 scala_deps = module_extension(implementation = _scala_deps_impl)
