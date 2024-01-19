@@ -294,5 +294,30 @@ def _scala_deps_impl(ctx):
     # needed for the cross repo proto test
     proto_cross_repo_boundary_repository()
     test_new_local_repo()
+    repository(
+        id = "org_scalameta_semanticdb_scalac",
+        validate_scala_version = True
+    )
+    repository(
+        id = "io_bazel_rules_scala_scala_reflect",
+        validate_scala_version = True
+    )
+    repository(id = "io_bazel_rules_scala_scala_parallel_collections")
+    repository(
+        id = "io_bazel_rules_scala_scala_interfaces",
+        validate_scala_version = True
+    )
+    repository(
+        id = "io_bazel_rules_scala_scala_tasty_core",
+        validate_scala_version = True
+    )
+    repository(
+        id = "io_bazel_rules_scala_scala_asm",
+        validate_scala_version = True
+    )
+    repository(
+        id = "io_bazel_rules_scala_scala_library_2",
+        validate_scala_version = True
+    )
 
 scala_deps = module_extension(implementation = _scala_deps_impl)

@@ -97,7 +97,10 @@ def repository(
         if not SCALA_VERSION == repository_scala_version:
             fail("Scala config (%s) version does not match repository version (%s)" % (SCALA_VERSION, repository_scala_version))
     artifacts = artifacts_by_major_scala_version[SCALA_MAJOR_VERSION]
-    _scala_maven_import_external(
+    if artifacts[id].get("dummy", False) == True:
+        dummy_repo(repo_name = id)
+    else:
+        _scala_maven_import_external(
         name = id,
         repo_name = id,
         artifact = artifacts[id]["artifact"],
@@ -109,3 +112,13 @@ def repository(
         testonly_ = artifacts[id].get("testonly", False),
         fetch_sources = fetch_sources,
     )
+
+def _dummy_repo_impl(repository_ctx):
+    repository_ctx.file("BUILD")
+
+_dummy_repo = repository_rule(
+    implementation = _dummy_repo_impl,
+)
+
+def dummy_repo(repo_name):
+    _dummy_repo(name = repo_name)
