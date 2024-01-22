@@ -56,7 +56,7 @@ test_strict_deps_filter_excluded_target() {
 
 test_strict_deps_filter_included_target() {
   local test_target="//test_expect_failure/missing_direct_deps/filtering:b"
-  local expected_message="buildozer 'add deps @com_google_guava_guava_21_0//:com_google_guava_guava_21_0' ${test_target}"
+  local expected_message="buildozer 'add deps @.*com_google_guava_guava_21_0//:com_google_guava_guava_21_0' ${test_target}"
 
   test_expect_failure_or_warning_on_missing_direct_deps_with_expected_message \
     "${expected_message}" ${test_target} \
@@ -66,7 +66,7 @@ test_strict_deps_filter_included_target() {
 
 test_demonstrate_INCORRECT_scala_proto_library_stamp() {
   local test_target="//test_expect_failure/missing_direct_deps/scala_proto_deps:uses_transitive_scala_proto"
-  local incorrectly_stamped_expected_message="buildozer 'add deps @//test_expect_failure/missing_direct_deps/scala_proto_deps:some_proto' ${test_target}"
+  local incorrectly_stamped_expected_message="buildozer 'add deps @.*//test_expect_failure/missing_direct_deps/scala_proto_deps:some_proto' ${test_target}"
 
   # When stamping is fixed, expected stamp is:
   # local correctly_stamped_expected_message="buildozer 'add deps //test_expect_failure/missing_direct_deps/scala_proto_deps:some_scala_proto' ${test_target}"
@@ -79,7 +79,7 @@ test_demonstrate_INCORRECT_scala_proto_library_stamp() {
 
 test_scala_proto_library_stamp_by_convention() {
   local test_target="//test_expect_failure/missing_direct_deps/scala_proto_deps:uses_transitive_scala_proto"
-  local expected_message="buildozer 'add deps @//test_expect_failure/missing_direct_deps/scala_proto_deps:some_scala_proto' ${test_target}"
+  local expected_message="buildozer 'add deps @.*//test_expect_failure/missing_direct_deps/scala_proto_deps:some_scala_proto' ${test_target}"
 
   test_expect_failure_or_warning_on_missing_direct_deps_with_expected_message \
     "${expected_message}" ${test_target} \
@@ -89,7 +89,7 @@ test_scala_proto_library_stamp_by_convention() {
 
 test_scala_proto_library_custom_phase_stamping() {
   local test_target="//test_expect_failure/missing_direct_deps/scala_proto_deps:uses_transitive_some_proto_custom_suffix"
-  local expected_message="buildozer 'add deps @//test_expect_failure/missing_direct_deps/scala_proto_deps:some_proto_custom_suffix' ${test_target}"
+  local expected_message="buildozer 'add deps .*@//test_expect_failure/missing_direct_deps/scala_proto_deps:some_proto_custom_suffix' ${test_target}"
 
   test_expect_failure_or_warning_on_missing_direct_deps_with_expected_message \
     "${expected_message}" ${test_target} \
@@ -99,11 +99,11 @@ test_scala_proto_library_custom_phase_stamping() {
 
 $runner test_scala_import_library_passes_labels_of_direct_deps
 $runner test_plus_one_deps_only_works_for_java_info_targets
-#$runner test_scala_import_expect_failure_on_missing_direct_deps_warn_mode TODO #1482
+$runner test_scala_import_expect_failure_on_missing_direct_deps_warn_mode
 $runner test_plus_one_ast_analyzer_strict_deps
 $runner test_stamped_target_label_loading
 $runner test_strict_deps_filter_excluded_target
-#$runner test_strict_deps_filter_included_target TODO #1482
-#$runner test_demonstrate_INCORRECT_scala_proto_library_stamp TODO #1482
-#$runner test_scala_proto_library_stamp_by_convention TODO #1482
-#$runner test_scala_proto_library_custom_phase_stamping TODO #1482
+$runner test_strict_deps_filter_included_target
+$runner test_demonstrate_INCORRECT_scala_proto_library_stamp
+$runner test_scala_proto_library_stamp_by_convention
+$runner test_scala_proto_library_custom_phase_stamping
