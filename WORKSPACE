@@ -82,9 +82,10 @@ proto_cross_repo_boundary_repository()
 load("//third_party/test/new_local_repo:repo.bzl", "test_new_local_repo")
 test_new_local_repo()
 
-local_repository(
+load(":extensions/extension_utils.bzl", "starlarkified_local_repository")
+starlarkified_local_repository(
     name = "example_external_workspace",
-    path = "third_party/test/example_external_workspace",
+    path = "third_party/test/example_external_workspace"
 )
 
 load("@io_bazel_rules_scala//scala:toolchains.bzl", "scala_register_unused_deps_toolchains")

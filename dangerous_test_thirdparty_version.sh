@@ -36,7 +36,7 @@ test_scala_version() {
   cp $dir/WORKSPACE $dir/WORKSPACE.bzlmod
   replace_workspace "scala_repositories((\"$SCALA_VERSION\", { $SCALA_VERSION_SHAS }))"
 
-  bazel test //third_party/...
+  bazel test -- third_party/... -third_party/test/example_external_workspace/...
   RESPONSE_CODE=$?
   # Restore old behavior
   rm $dir/WORKSPACE
