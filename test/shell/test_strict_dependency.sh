@@ -41,7 +41,7 @@ test_plus_one_ast_analyzer_strict_deps() {
 
 test_stamped_target_label_loading() {
   local test_target="//test_expect_failure/missing_direct_deps/external_deps:java_lib_with_a_transitive_external_dep"
-  local expected_message="buildozer 'add deps @io_bazel_rules_scala_guava//:io_bazel_rules_scala_guava' ${test_target}"
+  local expected_message="buildozer 'add deps @.*io_bazel_rules_scala_guava//:io_bazel_rules_scala_guava' ${test_target}"
 
   test_expect_failure_or_warning_on_missing_direct_deps_with_expected_message \
     "${expected_message}" ${test_target} \
