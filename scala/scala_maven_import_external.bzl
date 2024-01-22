@@ -133,7 +133,7 @@ def _jvm_import_external(repository_ctx):
         "",
         "alias(",
         "    name = \"jar\",",
-        "    actual = \"@%s\"," % repository_ctx.attr.repo_name or repository_ctx.name,
+        "    actual = \"@%s\"," % (repository_ctx.attr.repo_name or repository_ctx.name),
         ")",
         "",
     ]))
