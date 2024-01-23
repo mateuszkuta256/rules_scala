@@ -6,15 +6,16 @@ bazel_dep(name = "rules_java", version = "5.5.0")
 bazel_dep(name = "rules_proto", version = "5.3.0-21.7")
 bazel_dep(name = "rules_python", version = "0.28.0")
 bazel_dep(name = "protobuf", version = "21.7", repo_name = "com_google_protobuf")
+bazel_dep(name = "rules_go", version = "0.45.1", repo_name = "io_bazel_rules_go")
 
 use_repo(
     use_extension("//:extensions/scala_config_ext.bzl", "scala_config_dep"),
     "io_bazel_rules_scala_config"
 )
-use_repo(
-    use_extension("//:extensions/ci_tools.bzl", "ci_tools_dep"),
-    "bazelci_rules"
-)
+
+ci_tools_dep = use_extension("//:extensions/ci_tools.bzl", "ci_tools_dep")
+use_repo(ci_tools_dep, "bazelci_rules")
+use_repo(ci_tools_dep, "com_github_bazelbuild_buildtools")
 
 non_module_deps = use_extension("//:extensions/non_module_deps.bzl", "non_module_deps")
 use_repo(non_module_deps, "scala_compiler_source")
