@@ -25,10 +25,6 @@ load("//twitter_scrooge:twitter_scrooge.bzl", "twitter_scrooge")
 
 twitter_scrooge()
 
-load("//scalatest:scalatest.bzl", "scalatest_repositories")
-
-scalatest_repositories()
-
 load("//specs2:specs2_junit.bzl", "specs2_junit_repositories")
 
 specs2_junit_repositories()

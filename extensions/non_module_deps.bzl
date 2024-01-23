@@ -190,5 +190,17 @@ def _non_module_deps_impl(ctx):
         id = "scala_proto_rules_opencensus_contrib_grpc_metrics",
         fetch_sources = False,
     )
+    repository(id = "io_bazel_rules_scala_scalatest")
+    repository(id = "io_bazel_rules_scala_scalatest_compatible")
+    repository(id = "io_bazel_rules_scala_scalatest_core")
+    repository(id = "io_bazel_rules_scala_scalatest_featurespec")
+    repository(id = "io_bazel_rules_scala_scalatest_flatspec")
+    repository(id = "io_bazel_rules_scala_scalatest_freespec")
+    repository(id = "io_bazel_rules_scala_scalatest_funsuite")
+    repository(id = "io_bazel_rules_scala_scalatest_funspec")
+    repository(id = "io_bazel_rules_scala_scalatest_matchers_core")
+    repository(id = "io_bazel_rules_scala_scalatest_shouldmatchers")
+    repository(id = "io_bazel_rules_scala_scalatest_mustmatchers")
+    repository(id = "io_bazel_rules_scala_scalactic")
 
 non_module_deps = module_extension(implementation = _non_module_deps_impl)
