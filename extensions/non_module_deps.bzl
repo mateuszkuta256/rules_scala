@@ -5,6 +5,7 @@ load("//test/proto_cross_repo_boundary:repo.bzl", "proto_cross_repo_boundary_rep
 load("//scala:scala_maven_import_external.bzl", "java_import_external")
 load("//third_party/test/new_local_repo:repo.bzl", "test_new_local_repo")
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
+load("@bazelci_rules//:rbe_repo.bzl", "rbe_preconfig")
 load(
     "@io_bazel_rules_scala//scala/private:macros/scala_repositories.bzl",
     _dt_patched_compiler_setup = "dt_patched_compiler_setup",
@@ -308,6 +309,10 @@ def _non_module_deps_impl(ctx):
         sha256 = "1db6b2fa642950ee1b4b1ec2b6bc8a9113d7a4cd723f79398e1ada7dab1c981c",
         strip_prefix = "zulu8.50.0.51-ca-jdk8.0.275-linux_x64",
         build_file = "@rules_java//toolchains:jdk.BUILD",
+    )
+    rbe_preconfig(
+        name = "rbe_default",
+        toolchain = "ubuntu2004-bazel-java11",
     )
 
 non_module_deps = module_extension(implementation = _non_module_deps_impl)

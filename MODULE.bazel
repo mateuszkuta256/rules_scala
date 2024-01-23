@@ -11,6 +11,10 @@ use_repo(
     use_extension("//:extensions/scala_config_ext.bzl", "scala_config_dep"),
     "io_bazel_rules_scala_config"
 )
+use_repo(
+    use_extension("//:extensions/ci_tools.bzl", "ci_tools_dep"),
+    "bazelci_rules"
+)
 
 non_module_deps = use_extension("//:extensions/non_module_deps.bzl", "non_module_deps")
 use_repo(non_module_deps, "scala_compiler_source")
@@ -127,6 +131,7 @@ use_repo(non_module_deps, "test_new_local_repo")
 use_repo(non_module_deps, "remote_jdk8_macos")
 use_repo(non_module_deps, "remote_jdk8_windows")
 use_repo(non_module_deps, "remote_jdk8_linux")
+use_repo(non_module_deps, "rbe_default")
 
 register_toolchains("@io_bazel_rules_scala//jmh:jmh_toolchain")
 register_toolchains("@io_bazel_rules_scala//scala_proto:default_deps_toolchain")
