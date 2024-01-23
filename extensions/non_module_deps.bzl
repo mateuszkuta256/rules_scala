@@ -1,5 +1,6 @@
 load("//third_party/repositories:repositories.bzl", "repository")
 load("//private:format.bzl", "format_repositories")
+load("//scala/scalafmt:scalafmt_repositories.bzl", "scalafmt_default_bzlmod_config")
 load(
     "@io_bazel_rules_scala//scala/private:macros/scala_repositories.bzl",
     _dt_patched_compiler_setup = "dt_patched_compiler_setup",
@@ -241,5 +242,6 @@ def _non_module_deps_impl(ctx):
     repository(id = "com_geirsson_metaconfig_core")
     repository(id = "com_geirsson_metaconfig_typesafe_config")
     repository(id = "io_bazel_rules_scala_scala_parallel_collections")
+    scalafmt_default_bzlmod_config()
 
 non_module_deps = module_extension(implementation = _non_module_deps_impl)

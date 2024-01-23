@@ -14,6 +14,28 @@ def scalafmt_default_config(path = ".scalafmt.conf"):
     build.append(")")
     native.new_local_repository(name = "scalafmt_default", build_file_content = "\n".join(build), path = "")
 
+def _scalafmt_default_bzlmod_config_impl(repository_ctx):
+    # TODO(#1482) probably need to introduce repo-env for config path
+    config_file_path = repository_ctx.attr.config_file_path or str(repository_ctx.workspace_root) + "/.scalafmt.conf"
+    repository_ctx.file("config.conf", repository_ctx.read(config_file_path))
+    build = []
+    build.append("filegroup(")
+    build.append("    name = \"config\",")
+    build.append("    srcs = [\"config.conf\"],")
+    build.append("    visibility = [\"//visibility:public\"],")
+    build.append(")")
+    repository_ctx.file("BUILD", "\n".join(build))
+
+_scalafmt_default_bzlmod_config = repository_rule(
+    implementation = _scalafmt_default_bzlmod_config_impl,
+    attrs = {
+        "config_file_path": attr.string(),
+    },
+)
+
+def scalafmt_default_bzlmod_config(path = None):
+    _scalafmt_default_bzlmod_config(name = "scalafmt_default", config_file_path = path)
+
 def scalafmt_repositories(
         maven_servers = _default_maven_server_urls(),
         overriden_artifacts = {}):

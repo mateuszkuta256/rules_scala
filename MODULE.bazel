@@ -111,6 +111,7 @@ use_repo(non_module_deps, "com_google_protobuf_protobuf_java")
 use_repo(non_module_deps, "com_geirsson_metaconfig_core")
 use_repo(non_module_deps, "com_geirsson_metaconfig_typesafe_config")
 use_repo(non_module_deps, "io_bazel_rules_scala_scala_parallel_collections")
+use_repo(non_module_deps, "scalafmt_default")
 
 register_toolchains("@io_bazel_rules_scala//jmh:jmh_toolchain")
 register_toolchains("@io_bazel_rules_scala//scala_proto:default_deps_toolchain")

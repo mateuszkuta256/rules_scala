@@ -13,10 +13,6 @@ http_archive(
 
 load("//scala:scala_cross_version.bzl", "default_maven_server_urls")
 
-load("//scala/scalafmt:scalafmt_repositories.bzl", "scalafmt_default_config")
-
-scalafmt_default_config()
-
 MAVEN_SERVER_URLS = default_maven_server_urls()
 
 # needed for the cross repo proto test
