@@ -260,5 +260,21 @@ def _non_module_deps_impl(ctx):
         neverlink = True,
         testonly_ = True,
     )
+    repository(id = "com_twitter__scalding_date", fetch_sources = False) # test adding a scala jar:
+    # test of strict deps (scalac plugin UT + E2E)
+    repository(id = "com_google_guava_guava_21_0_with_file", fetch_sources = False)
+    repository(id = "com_github_jnr_jffi_native", fetch_sources = False)
+    repository(id = "org_apache_commons_commons_lang_3_5", fetch_sources = False)
+    repository(id = "com_google_guava_guava_21_0", fetch_sources = False)
+    # test of import external
+    # scala maven import external decodes maven artifacts to its parts
+    # (group id, artifact id, packaging, version and classifier). To make sure
+    # the decoding and then the download url composition are working the artifact example
+    # must contain all the different parts and sha256s so the downloaded content will be
+    # validated against it
+    repository(id = "org_springframework_spring_core", fetch_sources = False)
+    repository(id = "org_springframework_spring_tx", fetch_sources = False)
+    repository(id = "org_typelevel_kind_projector", fetch_sources = False)
+    repository(id = "org_typelevel__cats_core", fetch_sources = False) # For testing that we don't include sources jars to the classpath
 
 non_module_deps = module_extension(implementation = _non_module_deps_impl)
