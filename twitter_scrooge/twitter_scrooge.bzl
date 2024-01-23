@@ -25,28 +25,6 @@ load("//third_party/repositories:repositories.bzl", "repositories")
 
 _jar_extension = ".jar"
 
-def _declare_and_bind(
-        label,
-        artifact_id,
-        external_artifact_id,
-        overriden_artifacts,
-        maven_servers):
-    if not label:
-        repositories(
-            for_artifact_ids = [
-                artifact_id,
-            ],
-            maven_servers = maven_servers,
-            fetch_sources = False,
-            overriden_artifacts = overriden_artifacts,
-        )
-        label = "@" + artifact_id
-
-    native.bind(
-        name = external_artifact_id,
-        actual = label,
-    )
-
 def twitter_scrooge(
         maven_servers = _default_maven_server_urls(),
         overriden_artifacts = {},
@@ -57,82 +35,22 @@ def twitter_scrooge(
         scrooge_generator = None,
         util_core = None,
         util_logging = None):
-    _declare_and_bind(
-        libthrift,
-        "libthrift",
-        "io_bazel_rules_scala/dependency/thrift/libthrift",
-        overriden_artifacts,
-        maven_servers,
-    )
-
-    _declare_and_bind(
-        scrooge_core,
-        "io_bazel_rules_scala_scrooge_core",
-        "io_bazel_rules_scala/dependency/thrift/scrooge_core",
-        overriden_artifacts,
-        maven_servers,
-    )
-
-    _declare_and_bind(
-        scrooge_generator,
-        "io_bazel_rules_scala_scrooge_generator",
-        "io_bazel_rules_scala/dependency/thrift/scrooge_generator",
-        overriden_artifacts,
-        maven_servers,
-    )
-
-    _declare_and_bind(
-        util_core,
-        "io_bazel_rules_scala_util_core",
-        "io_bazel_rules_scala/dependency/thrift/util_core",
-        overriden_artifacts,
-        maven_servers,
-    )
-
-    _declare_and_bind(
-        util_logging,
-        "io_bazel_rules_scala_util_logging",
-        "io_bazel_rules_scala/dependency/thrift/util_logging",
-        overriden_artifacts,
-        maven_servers,
-    )
-
     repositories(
         for_artifact_ids = [
             "io_bazel_rules_scala_mustache",  # Mustache is needed to generate java from thrift, and is passed further down.
-            "io_bazel_rules_scala_guava",
-            "io_bazel_rules_scala_javax_annotation_api",
+            "io_bazel_rules_scala_guava",  # scrooge-generator needs these runtime_deps to generate java from thrift.
+            "io_bazel_rules_scala_javax_annotation_api",  # This is a shim needed to import `@javax.annotation.Generated` when compiled with jdk11.
             "io_bazel_rules_scala_scopt",
+            "libthrift",
+            "io_bazel_rules_scala_scrooge_core",
+            "io_bazel_rules_scala_scrooge_generator",
+            "io_bazel_rules_scala_util_core",
+            "io_bazel_rules_scala_util_logging",
         ],
         maven_servers = maven_servers,
         fetch_sources = False,
         overriden_artifacts = overriden_artifacts,
     )
-
-    native.bind(
-        name = "io_bazel_rules_scala/dependency/thrift/mustache",
-        actual = "@io_bazel_rules_scala_mustache",
-    )
-
-    native.bind(
-        name = "io_bazel_rules_scala/dependency/thrift/scopt",
-        actual = "@io_bazel_rules_scala_scopt",
-    )
-
-    # scrooge-generator needs these runtime_deps to generate java from thrift.
-    if not native.existing_rule("io_bazel_rules_scala/dependency/scala/guava"):
-        native.bind(
-            name = "io_bazel_rules_scala/dependency/scala/guava",
-            actual = "@io_bazel_rules_scala_guava",
-        )
-
-    # This is a shim needed to import `@javax.annotation.Generated` when compiled with jdk11.
-    if not native.existing_rule("io_bazel_rules_scala/dependency/thrift/javax_annotation_api"):
-        native.bind(
-            name = "io_bazel_rules_scala/dependency/thrift/javax_annotation_api",
-            actual = "@io_bazel_rules_scala_javax_annotation_api",
-        )
-
     native.register_toolchains("@io_bazel_rules_scala//twitter_scrooge:scrooge_toolchain")
 
 def _colon_paths(data):
