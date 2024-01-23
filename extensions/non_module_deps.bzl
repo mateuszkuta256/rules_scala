@@ -4,6 +4,7 @@ load("//scala/scalafmt:scalafmt_repositories.bzl", "scalafmt_default_bzlmod_conf
 load("//test/proto_cross_repo_boundary:repo.bzl", "proto_cross_repo_boundary_repository")
 load("//scala:scala_maven_import_external.bzl", "java_import_external")
 load("//third_party/test/new_local_repo:repo.bzl", "test_new_local_repo")
+load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 load(
     "@io_bazel_rules_scala//scala/private:macros/scala_repositories.bzl",
     _dt_patched_compiler_setup = "dt_patched_compiler_setup",
@@ -278,5 +279,35 @@ def _non_module_deps_impl(ctx):
     repository(id = "org_typelevel_kind_projector", fetch_sources = False)
     repository(id = "org_typelevel__cats_core", fetch_sources = False) # For testing that we don't include sources jars to the classpath
     test_new_local_repo()
+    http_archive(
+        name = "remote_jdk8_macos",
+        urls = [
+            "https://mirror.bazel.build/openjdk/azul-zulu-8.50.0.51-ca-jdk8.0.275/zulu8.50.0.51-ca-jdk8.0.275-macosx_x64.tar.gz",
+            "https://cdn.azul.com/zulu/bin/zulu8.50.0.51-ca-jdk8.0.275-macosx_x64.tar.gz"
+        ],
+        sha256 = "b03176597734299c9a15b7c2cc770783cf14d121196196c1248e80c026b59c17",
+        strip_prefix = "zulu8.50.0.51-ca-jdk8.0.275-macosx_x64",
+        build_file = "@rules_java//toolchains:jdk.BUILD",
+    )
+    http_archive(
+        name = "remote_jdk8_windows",
+        urls = [
+            "https://mirror.bazel.build/openjdk/azul-zulu-8.50.0.51-ca-jdk8.0.275/zulu8.50.0.51-ca-jdk8.0.275-win_x64.zip",
+            "https://cdn.azul.com/zulu/bin/zulu8.50.0.51-ca-jdk8.0.275-win_x64.zip",
+        ],
+        sha256 = "49759b2bd2ab28231a21ff3a3bb45824ddef55d89b5b1a05a62e26a365da0774",
+        strip_prefix = "zulu8.50.0.51-ca-jdk8.0.275-win_x64",
+        build_file = "@rules_java//toolchains:jdk.BUILD",
+    )
+    http_archive(
+        name = "remote_jdk8_linux",
+        urls = [
+            "https://mirror.bazel.build/openjdk/azul-zulu-8.50.0.51-ca-jdk8.0.275/zulu8.50.0.51-ca-jdk8.0.275-linux_x64.tar.gz",
+            "https://cdn.azul.com/zulu/bin/zulu8.50.0.51-ca-jdk8.0.275-linux_x64.tar.gz",
+        ],
+        sha256 = "1db6b2fa642950ee1b4b1ec2b6bc8a9113d7a4cd723f79398e1ada7dab1c981c",
+        strip_prefix = "zulu8.50.0.51-ca-jdk8.0.275-linux_x64",
+        build_file = "@rules_java//toolchains:jdk.BUILD",
+    )
 
 non_module_deps = module_extension(implementation = _non_module_deps_impl)
