@@ -3,6 +3,7 @@ load("//private:format.bzl", "format_repositories")
 load("//scala/scalafmt:scalafmt_repositories.bzl", "scalafmt_default_bzlmod_config")
 load("//test/proto_cross_repo_boundary:repo.bzl", "proto_cross_repo_boundary_repository")
 load("//scala:scala_maven_import_external.bzl", "java_import_external")
+load("//third_party/test/new_local_repo:repo.bzl", "test_new_local_repo")
 load(
     "@io_bazel_rules_scala//scala/private:macros/scala_repositories.bzl",
     _dt_patched_compiler_setup = "dt_patched_compiler_setup",
@@ -276,5 +277,6 @@ def _non_module_deps_impl(ctx):
     repository(id = "org_springframework_spring_tx", fetch_sources = False)
     repository(id = "org_typelevel_kind_projector", fetch_sources = False)
     repository(id = "org_typelevel__cats_core", fetch_sources = False) # For testing that we don't include sources jars to the classpath
+    test_new_local_repo()
 
 non_module_deps = module_extension(implementation = _non_module_deps_impl)

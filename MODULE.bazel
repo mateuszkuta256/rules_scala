@@ -123,6 +123,7 @@ use_repo(non_module_deps, "org_springframework_spring_core")
 use_repo(non_module_deps, "org_springframework_spring_tx")
 use_repo(non_module_deps, "org_typelevel_kind_projector")
 use_repo(non_module_deps, "org_typelevel__cats_core")
+use_repo(non_module_deps, "test_new_local_repo")
 
 register_toolchains("@io_bazel_rules_scala//jmh:jmh_toolchain")
 register_toolchains("@io_bazel_rules_scala//scala_proto:default_deps_toolchain")

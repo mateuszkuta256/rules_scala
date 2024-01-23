@@ -15,19 +15,6 @@ load("//scala:scala_cross_version.bzl", "default_maven_server_urls")
 
 MAVEN_SERVER_URLS = default_maven_server_urls()
 
-new_local_repository(
-    name = "test_new_local_repo",
-    build_file_content =
-        """
-filegroup(
-    name = "data",
-    srcs = glob(["**/*.txt"]),
-    visibility = ["//visibility:public"],
-)
-""",
-    path = "third_party/test/new_local_repo",
-)
-
 local_repository(
     name = "example_external_workspace",
     path = "third_party/test/example_external_workspace",
