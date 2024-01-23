@@ -15,11 +15,6 @@ load("//scala:scala_cross_version.bzl", "default_maven_server_urls")
 
 MAVEN_SERVER_URLS = default_maven_server_urls()
 
-# needed for the cross repo proto test
-load("//test/proto_cross_repo_boundary:repo.bzl", "proto_cross_repo_boundary_repository")
-
-proto_cross_repo_boundary_repository()
-
 new_local_repository(
     name = "test_new_local_repo",
     build_file_content =
