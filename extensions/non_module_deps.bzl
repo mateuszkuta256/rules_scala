@@ -210,8 +210,15 @@ def _non_module_deps_impl(ctx):
     repository(id = "io_bazel_rules_scala_junit_junit")
     repository(id = "io_bazel_rules_scala_org_hamcrest_hamcrest_core")
     repository(id = "io_bazel_rules_scala_org_specs2_specs2_junit")
-
-    ## Linting
-    format_repositories()
+    format_repositories()  ## Linting
+    repository(id = "io_bazel_rules_scala_mustache", fetch_sources = False)
+    repository(id = "io_bazel_rules_scala_guava", fetch_sources = False)
+    repository(id = "io_bazel_rules_scala_javax_annotation_api", fetch_sources = False)
+    repository(id = "io_bazel_rules_scala_scopt", fetch_sources = False)
+    repository(id = "libthrift", fetch_sources = False)
+    repository(id = "io_bazel_rules_scala_scrooge_core", fetch_sources = False)
+    repository(id = "io_bazel_rules_scala_scrooge_generator", fetch_sources = False)
+    repository(id = "io_bazel_rules_scala_util_core", fetch_sources = False)
+    repository(id = "io_bazel_rules_scala_util_logging", fetch_sources = False)
 
 non_module_deps = module_extension(implementation = _non_module_deps_impl)

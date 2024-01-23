@@ -12,9 +12,6 @@ http_archive(
 )
 
 load("//scala:scala_cross_version.bzl", "default_maven_server_urls")
-load("//twitter_scrooge:twitter_scrooge.bzl", "twitter_scrooge")
-
-twitter_scrooge()
 
 load("//scala/scalafmt:scalafmt_repositories.bzl", "scalafmt_default_config", "scalafmt_repositories")
 
