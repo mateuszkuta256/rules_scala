@@ -11,15 +11,6 @@ http_archive(
     url = "https://github.com/bazelbuild/buildtools/archive/%s.tar.gz" % _build_tools_release,
 )
 
-load("@rules_proto//proto:repositories.bzl", "rules_proto_dependencies", "rules_proto_toolchains")
-
-# Declares @com_google_protobuf//:protoc pointing to released binary
-# This should stop building protoc during bazel build
-# See https://github.com/bazelbuild/rules_proto/pull/36
-rules_proto_dependencies()
-
-rules_proto_toolchains()
-
 load("//scala:scala_cross_version.bzl", "default_maven_server_urls")
 load("//twitter_scrooge:twitter_scrooge.bzl", "twitter_scrooge")
 
