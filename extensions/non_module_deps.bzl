@@ -1,4 +1,5 @@
 load("//third_party/repositories:repositories.bzl", "repository")
+load("//private:format.bzl", "format_repositories")
 load(
     "@io_bazel_rules_scala//scala/private:macros/scala_repositories.bzl",
     _dt_patched_compiler_setup = "dt_patched_compiler_setup",
@@ -209,5 +210,8 @@ def _non_module_deps_impl(ctx):
     repository(id = "io_bazel_rules_scala_junit_junit")
     repository(id = "io_bazel_rules_scala_org_hamcrest_hamcrest_core")
     repository(id = "io_bazel_rules_scala_org_specs2_specs2_junit")
+
+    ## Linting
+    format_repositories()
 
 non_module_deps = module_extension(implementation = _non_module_deps_impl)

@@ -63,12 +63,6 @@ java_import_external(
     testonly_ = True,
 )
 
-## Linting
-
-load("//private:format.bzl", "format_repositories")
-
-format_repositories()
-
 http_archive(
     name = "io_bazel_rules_go",
     sha256 = "dd926a88a564a9246713a9c00b35315f54cbd46b31a26d5d8fb264c07045f05d",
