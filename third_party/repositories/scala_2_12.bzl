@@ -528,4 +528,7 @@ artifacts = {
     "io_bazel_rules_scala_scala_library_2": {
         "dummy": True,
     },
+    "io_bazel_rules_scala_scala_parallel_collections": {
+        "dummy": True,
+    },
 }
