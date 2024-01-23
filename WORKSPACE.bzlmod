@@ -11,11 +11,6 @@ http_archive(
     url = "https://github.com/bazelbuild/buildtools/archive/%s.tar.gz" % _build_tools_release,
 )
 
-local_repository(
-    name = "example_external_workspace",
-    path = "third_party/test/example_external_workspace",
-)
-
 http_archive(
     name = "io_bazel_rules_go",
     sha256 = "dd926a88a564a9246713a9c00b35315f54cbd46b31a26d5d8fb264c07045f05d",

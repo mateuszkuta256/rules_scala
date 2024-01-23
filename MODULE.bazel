@@ -132,6 +132,7 @@ use_repo(non_module_deps, "remote_jdk8_macos")
 use_repo(non_module_deps, "remote_jdk8_windows")
 use_repo(non_module_deps, "remote_jdk8_linux")
 use_repo(non_module_deps, "rbe_default")
+use_repo(non_module_deps, "example_external_workspace")
 
 register_toolchains("@io_bazel_rules_scala//jmh:jmh_toolchain")
 register_toolchains("@io_bazel_rules_scala//scala_proto:default_deps_toolchain")

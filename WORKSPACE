@@ -92,7 +92,9 @@ filegroup(
     path = "third_party/test/new_local_repo",
 )
 
-local_repository(
+load(":extensions/extension_utils.bzl", "starlarkified_local_repository")
+
+starlarkified_local_repository(
     name = "example_external_workspace",
     path = "third_party/test/example_external_workspace",
 )

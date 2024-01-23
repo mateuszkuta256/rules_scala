@@ -18,6 +18,9 @@ replace_workspace() {
   sed -i '' \
       -e "s|scala_repositories(.*)|$1|" \
       $dir/WORKSPACE
+  sed -i '' \
+      -e "s|scala_repositories(.*)|$1|" \
+      $dir/WORKSPACE.bzlmod
 }
 
 test_scala_version() {
@@ -29,13 +32,17 @@ test_scala_version() {
   SCALA_VERSION_SHAS+='"scala_reflect": "'$4'"'
 
   cp $dir/WORKSPACE $dir/WORKSPACE.bak
+  cp $dir/WORKSPACE.bzlmod $dir/WORKSPACE.bzlmod.bak
+  cp $dir/WORKSPACE $dir/WORKSPACE.bzlmod
   replace_workspace "scala_repositories((\"$SCALA_VERSION\", { $SCALA_VERSION_SHAS }))"
 
-  bazel test //third_party/...
+  bazel test -- //third_party/... -third_party/test/example_external_workspace/strip/...
   RESPONSE_CODE=$?
   # Restore old behavior
   rm $dir/WORKSPACE
   mv $dir/WORKSPACE.bak $dir/WORKSPACE
+  rm $dir/WORKSPACE.bzlmod
+  mv $dir/WORKSPACE.bzlmod.bak $dir/WORKSPACE.bzlmod
   exit $RESPONSE_CODE
 
 }

@@ -6,6 +6,7 @@ load("//scala:scala_maven_import_external.bzl", "java_import_external")
 load("//third_party/test/new_local_repo:repo.bzl", "test_new_local_repo")
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 load("@bazelci_rules//:rbe_repo.bzl", "rbe_preconfig")
+load(":extensions/extension_utils.bzl", "starlarkified_local_repository")
 load(
     "@io_bazel_rules_scala//scala/private:macros/scala_repositories.bzl",
     _dt_patched_compiler_setup = "dt_patched_compiler_setup",
@@ -263,12 +264,14 @@ def _non_module_deps_impl(ctx):
         neverlink = True,
         testonly_ = True,
     )
-    repository(id = "com_twitter__scalding_date", fetch_sources = False) # test adding a scala jar:
+    repository(id = "com_twitter__scalding_date", fetch_sources = False)  # test adding a scala jar:
+
     # test of strict deps (scalac plugin UT + E2E)
     repository(id = "com_google_guava_guava_21_0_with_file", fetch_sources = False)
     repository(id = "com_github_jnr_jffi_native", fetch_sources = False)
     repository(id = "org_apache_commons_commons_lang_3_5", fetch_sources = False)
     repository(id = "com_google_guava_guava_21_0", fetch_sources = False)
+
     # test of import external
     # scala maven import external decodes maven artifacts to its parts
     # (group id, artifact id, packaging, version and classifier). To make sure
@@ -278,13 +281,13 @@ def _non_module_deps_impl(ctx):
     repository(id = "org_springframework_spring_core", fetch_sources = False)
     repository(id = "org_springframework_spring_tx", fetch_sources = False)
     repository(id = "org_typelevel_kind_projector", fetch_sources = False)
-    repository(id = "org_typelevel__cats_core", fetch_sources = False) # For testing that we don't include sources jars to the classpath
+    repository(id = "org_typelevel__cats_core", fetch_sources = False)  # For testing that we don't include sources jars to the classpath
     test_new_local_repo()
     http_archive(
         name = "remote_jdk8_macos",
         urls = [
             "https://mirror.bazel.build/openjdk/azul-zulu-8.50.0.51-ca-jdk8.0.275/zulu8.50.0.51-ca-jdk8.0.275-macosx_x64.tar.gz",
-            "https://cdn.azul.com/zulu/bin/zulu8.50.0.51-ca-jdk8.0.275-macosx_x64.tar.gz"
+            "https://cdn.azul.com/zulu/bin/zulu8.50.0.51-ca-jdk8.0.275-macosx_x64.tar.gz",
         ],
         sha256 = "b03176597734299c9a15b7c2cc770783cf14d121196196c1248e80c026b59c17",
         strip_prefix = "zulu8.50.0.51-ca-jdk8.0.275-macosx_x64",
@@ -313,6 +316,10 @@ def _non_module_deps_impl(ctx):
     rbe_preconfig(
         name = "rbe_default",
         toolchain = "ubuntu2004-bazel-java11",
+    )
+    starlarkified_local_repository(
+        name = "example_external_workspace",
+        path = "third_party/test/example_external_workspace",
     )
 
 non_module_deps = module_extension(implementation = _non_module_deps_impl)
