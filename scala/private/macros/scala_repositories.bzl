@@ -3,7 +3,7 @@ load(
     "@io_bazel_rules_scala//scala:scala_cross_version.bzl",
     _default_maven_server_urls = "default_maven_server_urls",
 )
-load("//third_party/repositories:repositories.bzl", "repositories")
+load("//third_party/repositories:repositories.bzl", "repositories", "toolchain_repositories")
 load(
     "@io_bazel_rules_scala_config//:config.bzl",
     "SCALA_MAJOR_VERSION",
@@ -151,6 +151,36 @@ def rules_scala_toolchain_deps_repositories(
         fetch_sources = fetch_sources,
         overriden_artifacts = overriden_artifacts,
         validate_scala_version = validate_scala_version,
+    )
+    toolchain_repositories(
+        scala_version = "2.13.12",
+        for_artifact_ids = [
+            "io_bazel_rules_scala_scala_library",
+            "io_bazel_rules_scala_scala_compiler",
+            "io_bazel_rules_scala_scala_reflect",
+            "io_bazel_rules_scala_scala_xml",
+            "io_bazel_rules_scala_scala_parser_combinators",
+            "org_scalameta_semanticdb_scalac",
+        ],
+        maven_servers = maven_servers,
+        fetch_sources = fetch_sources,
+        overriden_artifacts = overriden_artifacts,
+    )
+    toolchain_repositories(
+        scala_version = "3.3.0",
+        for_artifact_ids = [
+            "io_bazel_rules_scala_scala_library",
+            "io_bazel_rules_scala_scala_compiler",
+            "io_bazel_rules_scala_scala_interfaces",
+            "io_bazel_rules_scala_scala_tasty_core",
+            "io_bazel_rules_scala_scala_asm",
+            "io_bazel_rules_scala_scala_xml",
+            "io_bazel_rules_scala_scala_parser_combinators",
+            "io_bazel_rules_scala_scala_library_2",
+        ],
+        maven_servers = maven_servers,
+        fetch_sources = fetch_sources,
+        overriden_artifacts = overriden_artifacts,
     )
 
 def scala_repositories(

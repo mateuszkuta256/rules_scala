@@ -9,7 +9,7 @@ artifacts = {
         "artifact": "org.scala-lang:scala3-library_3:%s" % scala_version,
         "sha256": "78add3aaa13701690b73fd90a13d1cae1da32565dedb379e65ade30a16973f6b",
         "deps": [
-            "@io_bazel_rules_scala_scala_library_2",
+            "@io_bazel_rules_scala_scala_library_2_3_3_0",
         ],
     },
     "io_bazel_rules_scala_scala_compiler": {
@@ -137,7 +137,6 @@ artifacts = {
             "@com_geirsson_metaconfig_typesafe_config",
             "@org_scalameta_scalameta",
             "@org_scala_lang_modules_scala_collection_compat",
-            "@io_bazel_rules_scala_scala_parallel_collections",
         ],
     },
     "org_scalameta_scalameta": {

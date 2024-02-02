@@ -23,6 +23,33 @@ java_library(
     ],
 )
 
+java_library(
+    name = "reporter_2_13_12",
+    srcs = [
+        "after_2_13_12/ProtoReporter.java",
+        "//src/java/io/bazel/rulesscala/scalac/deps_tracking_reporter:deps_tracking_reporter_2_13_12",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        ":scala_deps_java_proto",
+        "//scala/private/toolchain_deps:scala_compile_classpath",
+        "//src/java/io/bazel/rulesscala/scalac/compileoptions",
+        "@io_bazel_rules_scala//src/protobuf/io/bazel/rules_scala:diagnostics_java_proto",
+    ],
+)
+
+java_library(
+    name = "reporter_3_3_0",
+    srcs = ["PlaceholderForEmptyScala3Lib.java"],
+    visibility = ["//visibility:public"],
+    deps = [
+        ":scala_deps_java_proto",
+        "//scala/private/toolchain_deps:scala_compile_classpath",
+        "//src/java/io/bazel/rulesscala/scalac/compileoptions",
+        "@io_bazel_rules_scala//src/protobuf/io/bazel/rules_scala:diagnostics_java_proto",
+    ],
+)
+
 proto_library(
     name = "scala_deps_proto",
     srcs = ["scala_deps.proto"],

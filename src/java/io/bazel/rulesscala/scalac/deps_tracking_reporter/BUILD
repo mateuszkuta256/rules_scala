@@ -11,3 +11,9 @@ filegroup(
     ],
     visibility = ["//visibility:public"],
 )
+
+filegroup(
+    name = "deps_tracking_reporter_2_13_12",
+    srcs = ["after_2_13_12/DepsTrackingReporter.java"],
+    visibility = ["//visibility:public"],
+)
