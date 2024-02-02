@@ -29,6 +29,18 @@ load(
     "run_phases",
 )
 
+def _scala_version_transition_impl(settings, attr):
+    if attr.scala_version:
+        return {"//scala/versions:scala_version": attr.scala_version}
+    else:
+        return {}
+
+scala_version_transition = transition(
+    implementation = _scala_version_transition_impl,
+    inputs = [],
+    outputs = ["//scala/versions:scala_version"],
+)
+
 def _scala_binary_impl(ctx):
     return run_phases(
         ctx,
@@ -70,10 +82,21 @@ _scala_binary_attrs.update(common_attrs)
 
 _scala_binary_attrs.update(resolve_deps)
 
+_tch_attrs = {
+    "scala_version": attr.string(),
+    "_allowlist_function_transition": attr.label(
+        default = "@bazel_tools//tools/allowlists/function_transition_allowlist",
+    ),
+    "deps": attr.label_list(
+        cfg = scala_version_transition,
+    ),
+}
+
 def make_scala_binary(*extras):
     return rule(
         attrs = _dicts.add(
             _scala_binary_attrs,
+            _tch_attrs,
             extras_phases(extras),
             *[extra["attrs"] for extra in extras if "attrs" in extra]
         ),
@@ -87,6 +110,7 @@ def make_scala_binary(*extras):
             "@io_bazel_rules_scala//scala:toolchain_type",
             "@bazel_tools//tools/jdk:toolchain_type",
         ],
+        cfg = scala_version_transition,
         incompatible_use_toolchain_transition = True,
         implementation = _scala_binary_impl,
     )

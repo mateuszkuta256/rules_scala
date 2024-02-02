@@ -16,6 +16,7 @@ scalafmt_toolchain = rule(
             ],
             providers = [_DepsInfo],
         ),
+        "scala_version": attr.string(),
     },
 )
 

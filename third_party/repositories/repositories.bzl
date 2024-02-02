@@ -37,6 +37,7 @@ load(
     _scala_maven_import_external = "scala_maven_import_external",
 )
 load("@io_bazel_rules_scala_config//:config.bzl", "SCALA_MAJOR_VERSION", "SCALA_VERSION")
+load("//scala:scala_cross_version.bzl", "extract_major_version")
 
 artifacts_by_major_scala_version = {
     "2.11": _artifacts_2_11,
@@ -82,6 +83,29 @@ def repositories(
             licenses = ["notice"],
             server_urls = maven_servers,
             deps = artifacts[id].get("deps", []),
+            runtime_deps = artifacts[id].get("runtime_deps", []),
+            testonly_ = artifacts[id].get("testonly", False),
+            fetch_sources = fetch_sources,
+        )
+
+def toolchain_repositories(
+        scala_version,
+        for_artifact_ids = [],
+        maven_servers = default_maven_server_urls(),
+        overriden_artifacts = {},
+        fetch_sources = True):
+    scala_major_version = extract_major_version(scala_version)
+    default_artifacts = artifacts_by_major_scala_version[scala_major_version]
+    artifacts = dict(default_artifacts.items() + overriden_artifacts.items())
+    v = "_" + scala_version.replace(".", "_")
+    for id in for_artifact_ids:
+        _scala_maven_import_external(
+            name = id + v,
+            artifact = artifacts[id]["artifact"],
+            artifact_sha256 = artifacts[id]["sha256"],
+            licenses = ["notice"],
+            server_urls = maven_servers,
+            deps = [item + v for item in artifacts[id].get("deps", [])],
             runtime_deps = artifacts[id].get("runtime_deps", []),
             testonly_ = artifacts[id].get("testonly", False),
             fetch_sources = fetch_sources,

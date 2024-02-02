@@ -45,6 +45,63 @@ setup_scala_toolchain(
 )
 
 setup_scala_toolchain(
+    name = "2_13_12_toolchain",
+    parser_combinators_deps = [
+        "@io_bazel_rules_scala_scala_parser_combinators_2_13_12",
+    ],
+    scala_compile_classpath = [
+        "@io_bazel_rules_scala_scala_compiler_2_13_12",
+        "@io_bazel_rules_scala_scala_library_2_13_12",
+        "@io_bazel_rules_scala_scala_reflect_2_13_12",
+    ],
+    scala_library_classpath = [
+        "@io_bazel_rules_scala_scala_library_2_13_12",
+        "@io_bazel_rules_scala_scala_reflect_2_13_12",
+    ],
+    scala_macro_classpath = [
+        "@io_bazel_rules_scala_scala_library_2_13_12",
+        "@io_bazel_rules_scala_scala_reflect_2_13_12",
+    ],
+    scala_version = "2_13_12",
+    scala_xml_deps = [
+        "@io_bazel_rules_scala_scala_xml_2_13_12",
+    ],
+    semanticdb_deps = [
+        "@org_scalameta_semanticdb_scalac_2_13_12",
+    ],
+    use_argument_file_in_runner = True,
+)
+
+setup_scala_toolchain(
+    name = "3_3_0_toolchain",
+    parser_combinators_deps = [
+        "@io_bazel_rules_scala_scala_parser_combinators_3_3_0",
+    ],
+    scala_compile_classpath = [
+        "@io_bazel_rules_scala_scala_compiler_3_3_0",
+        "@io_bazel_rules_scala_scala_library_3_3_0",
+        "@io_bazel_rules_scala_scala_interfaces_3_3_0",
+        "@io_bazel_rules_scala_scala_tasty_core_3_3_0",
+        "@io_bazel_rules_scala_scala_asm_3_3_0",
+        "@io_bazel_rules_scala_scala_library_2_3_3_0",
+    ],
+    scala_library_classpath = [
+        "@io_bazel_rules_scala_scala_library_3_3_0",
+        "@io_bazel_rules_scala_scala_library_2_3_3_0",
+    ],
+    scala_macro_classpath = [
+        "@io_bazel_rules_scala_scala_library_3_3_0",
+        "@io_bazel_rules_scala_scala_library_2_3_3_0",
+    ],
+    scala_version = "3_3_0",
+    scala_xml_deps = [
+        "@io_bazel_rules_scala_scala_xml_3_3_0",
+    ],
+    semanticdb_deps = [],
+    use_argument_file_in_runner = True,
+)
+
+setup_scala_toolchain(
     name = "unused_dependency_checker_error_toolchain",
     dependency_tracking_method = "ast-plus",
     scala_compile_classpath = _SCALA_COMPILE_CLASSPATH_DEPS,

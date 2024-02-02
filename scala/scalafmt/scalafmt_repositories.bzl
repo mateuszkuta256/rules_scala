@@ -2,7 +2,7 @@ load(
     "//scala:scala_cross_version.bzl",
     _default_maven_server_urls = "default_maven_server_urls",
 )
-load("//third_party/repositories:repositories.bzl", "repositories")
+load("//third_party/repositories:repositories.bzl", "repositories", "toolchain_repositories")
 load("@io_bazel_rules_scala_config//:config.bzl", "SCALA_MAJOR_VERSION")
 
 def scalafmt_default_config(path = ".scalafmt.conf"):
@@ -49,4 +49,12 @@ def scalafmt_repositories(
         fetch_sources = True,
         overriden_artifacts = overriden_artifacts,
     )
+    toolchain_repositories(
+        scala_version = "2.13.12",
+        for_artifact_ids = artifact_ids + ["io_bazel_rules_scala_scala_parallel_collections"],
+        maven_servers = maven_servers,
+        fetch_sources = True,
+        overriden_artifacts = overriden_artifacts,
+    )
     native.register_toolchains("@io_bazel_rules_scala//scala/scalafmt:scalafmt_toolchain")
+    native.register_toolchains("@io_bazel_rules_scala//scala/scalafmt:scalafmt_toolchain_2_13_12")

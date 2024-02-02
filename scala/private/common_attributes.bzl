@@ -87,7 +87,19 @@ implicit_deps = {
     "_scalac": attr.label(
         executable = True,
         cfg = "exec",
-        default = Label("@io_bazel_rules_scala//src/java/io/bazel/rulesscala/scalac"),
+        default = Label("@io_bazel_rules_scala//src/java/io/bazel/rulesscala/scalac:scalac"),
+        allow_files = True,
+    ),
+    "_scalac_2_13_12": attr.label(
+        executable = True,
+        cfg = "exec",
+        default = Label("@io_bazel_rules_scala//src/java/io/bazel/rulesscala/scalac:scalac_2_13_12"),
+        allow_files = True,
+    ),
+    "_scalac_3_3_0": attr.label(
+        executable = True,
+        cfg = "exec",
+        default = Label("@io_bazel_rules_scala//src/java/io/bazel/rulesscala/scalac:scalac_3_3_0"),
         allow_files = True,
     ),
     "_exe": attr.label(

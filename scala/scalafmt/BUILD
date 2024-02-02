@@ -1,5 +1,6 @@
 load("//scala:scala.bzl", "scala_binary")
-load("//scala/scalafmt/toolchain:toolchain.bzl", "export_scalafmt_deps", "scalafmt_toolchain")
+load("//scala/scalafmt/toolchain:toolchain.bzl", "export_scalafmt_deps")
+load("//scala/scalafmt:setup_scalafmt_toolchain.bzl", "setup_scalafmt_toolchain")
 load("@io_bazel_rules_scala//scala:providers.bzl", "declare_deps_provider")
 load(
     "//scala/scalafmt:phase_scalafmt_ext.bzl",
@@ -29,9 +30,41 @@ scala_binary(
     ],
 )
 
+scala_binary(
+    name = "scala3-hello",
+    scala_version = "3_3_0",
+    srcs = ["scalafmt/Main.scala"],
+    main_class = "hello",
+)
+
 scalafmt_singleton(
     name = "phase_scalafmt",
     visibility = ["//visibility:public"],
+)
+
+setup_scalafmt_toolchain(
+    name = "scalafmt_toolchain",
+    scalafmt_classpath = [
+        "@com_geirsson_metaconfig_core",
+        "@org_scalameta_common",
+        "@org_scalameta_parsers",
+        "@org_scalameta_scalafmt_core",
+        "@org_scalameta_scalameta",
+        "@org_scalameta_trees",
+    ]
+)
+
+setup_scalafmt_toolchain(
+    name = "scalafmt_toolchain_2_13_12",
+    scala_version = "2_13_12",
+    scalafmt_classpath = [
+        "@com_geirsson_metaconfig_core_2_13_12",
+        "@org_scalameta_common_2_13_12",
+        "@org_scalameta_parsers_2_13_12",
+        "@org_scalameta_scalafmt_core_2_13_12",
+        "@org_scalameta_scalameta_2_13_12",
+        "@org_scalameta_trees_2_13_12",
+    ]
 )
 
 declare_deps_provider(
@@ -46,21 +79,6 @@ declare_deps_provider(
         "@org_scalameta_scalameta",
         "@org_scalameta_trees",
     ],
-)
-
-scalafmt_toolchain(
-    name = "scalafmt_toolchain_impl",
-    dep_providers = [
-        ":scalafmt_classpath_provider",
-    ],
-    visibility = ["//visibility:public"],
-)
-
-toolchain(
-    name = "scalafmt_toolchain",
-    toolchain = ":scalafmt_toolchain_impl",
-    toolchain_type = "//scala/scalafmt/toolchain:scalafmt_toolchain_type",
-    visibility = ["//visibility:public"],
 )
 
 export_scalafmt_deps(

@@ -6,6 +6,7 @@ def setup_scala_toolchain(
         scala_compile_classpath,
         scala_library_classpath,
         scala_macro_classpath,
+        scala_version = None,
         scala_xml_deps = None,
         parser_combinators_deps = None,
         semanticdb_deps = None,
@@ -86,12 +87,14 @@ def setup_scala_toolchain(
         dep_providers = dep_providers,
         enable_semanticdb = enable_semanticdb,
         visibility = visibility,
+        scala_version = scala_version,
         **kwargs
     )
 
     native.toolchain(
         name = name,
         toolchain = ":%s_impl" % name,
+        target_settings = ["//scala/versions:" + scala_version] if scala_version else [],
         toolchain_type = "@io_bazel_rules_scala//scala:toolchain_type",
         visibility = visibility,
     )

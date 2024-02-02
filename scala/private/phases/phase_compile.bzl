@@ -200,6 +200,8 @@ def _compile_or_empty(
         all_srcjars = depset(in_srcjars, transitive = [srcjars])
 
         sources = scala_srcs + java_srcs
+        toolchain = ctx.toolchains["@io_bazel_rules_scala//scala:toolchain_type"]
+        compiler = ctx.executable._scalac_3_3_0 if toolchain.scala_version == "3_3_0" else ctx.executable._scalac_2_13_12 if toolchain.scala_version == "2_13_12" else ctx.executable._scalac
         _compile_scala(
             ctx,
             ctx.label,
@@ -221,7 +223,7 @@ def _compile_or_empty(
             ctx.attr.expect_java_output,
             ctx.attr.scalac_jvm_flags,
             scalacopts,
-            ctx.executable._scalac,
+            compiler,
             dependency_info,
             unused_dependency_checker_ignored_targets,
             additional_outputs,

@@ -219,8 +219,8 @@ artifacts = {
         ],
     },
     "com_google_protobuf_protobuf_java": {
-        "artifact": "com.google.protobuf:protobuf-java:3.10.0",
-        "sha256": "161d7d61a8cb3970891c299578702fd079646e032329d6c2cabf998d191437c9",
+        "artifact": "com.google.protobuf:protobuf-java:3.21.7",
+        "sha256": "a204ec68748a7b26351ae37a311e8de468f248d1916d5f8dbe812c1289d0a0ff",
     },
     "com_geirsson_metaconfig_core": {
         "artifact": "com.geirsson:metaconfig-core_2.13:0.9.10",
