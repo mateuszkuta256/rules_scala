@@ -315,6 +315,5 @@ public class DepsTrackingReporter extends ConsoleReporter {
     }
 
     ProtoReporter protoReporter = (ProtoReporter) delegateReporter;
-    protoReporter.writeTo(Paths.get(diagnosticsFile));
   }
 }

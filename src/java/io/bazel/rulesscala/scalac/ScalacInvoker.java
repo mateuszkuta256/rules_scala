@@ -39,13 +39,11 @@ class ScalacInvoker{
     ConsoleReporter reporter = (ConsoleReporter) comp.getReporter();
     if (reporter instanceof ProtoReporter) {
       ProtoReporter protoReporter = (ProtoReporter) reporter;
-      protoReporter.writeTo(Paths.get(ops.diagnosticsFile));
     }
 
     if (reporter instanceof DepsTrackingReporter) {
       DepsTrackingReporter depTrackingReporter = (DepsTrackingReporter) reporter;
       depTrackingReporter.prepareReport();
-      depTrackingReporter.writeDiagnostics(ops.diagnosticsFile);
     }
 
     if (reporter.hasErrors()) {

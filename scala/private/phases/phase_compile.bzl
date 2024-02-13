@@ -206,7 +206,6 @@ def _compile_or_empty(
             ctx.outputs.jar,
             manifest,
             ctx.outputs.statsfile,
-            ctx.outputs.diagnosticsfile,
             ctx.outputs.scaladepsfile,
             sources,
             jars,
@@ -289,7 +288,6 @@ def _build_nosrc_jar(ctx):
     )
 
     ctx.actions.write(ctx.outputs.statsfile, "")
-    ctx.actions.write(ctx.outputs.diagnosticsfile, "")
     ctx.actions.write(ctx.outputs.scaladepsfile, "")
 
 def _create_scala_compilation_provider(ctx, ijar, source_jar, deps_providers):

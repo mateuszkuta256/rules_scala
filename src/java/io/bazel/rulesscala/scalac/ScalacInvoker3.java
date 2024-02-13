@@ -31,9 +31,7 @@ class ScalacInvoker{
     Reporter reporter = driver.doCompile(compiler, r._1, r._2);
 
     results.stopTime = System.currentTimeMillis();
-
-    Files.createFile(
-        Paths.get(ops.diagnosticsFile));
+    ;
     Files.createFile(
         Paths.get(ops.scalaDepsFile));
 

@@ -38,7 +38,6 @@ def compile_scala(
         output,
         manifest,
         statsfile,
-        diagnosticsfile,
         scaladepsfile,
         sources,
         cjars,
@@ -88,7 +87,6 @@ def compile_scala(
     args.add("--StatsfileOutput", statsfile)
     args.add("--EnableDiagnosticsReport", enable_diagnostics_report)
     args.add("--EnableStatsFile", enable_stats_file)
-    args.add("--DiagnosticsFile", diagnosticsfile)
     args.add("--ScalaDepsFile", scaladepsfile)
     args.add_all("--Classpath", compiler_classpath_jars)
     args.add_all("--ClasspathResourceSrcs", classpath_resources)
@@ -113,7 +111,7 @@ def compile_scala(
     if dependency_info.unused_deps_mode != "off" or dependency_info.strict_deps_mode != "off":
         args.add_all("--UnusedDepsIgnoredTargets", unused_dependency_checker_ignored_targets)
 
-    outs = [output, statsfile, diagnosticsfile, scaladepsfile] + additional_outputs
+    outs = [output, statsfile, scaladepsfile] + additional_outputs
 
     ins = depset(
         direct = [manifest] + sources + classpath_resources + resources + resource_jars,

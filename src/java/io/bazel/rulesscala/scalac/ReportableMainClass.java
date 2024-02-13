@@ -49,13 +49,7 @@ public class ReportableMainClass extends MainClass {
   }
 
   private void createDiagnosticsFile() {
-    Path path = Paths.get(ops.diagnosticsFile);
-    try {
-      Files.deleteIfExists(path);
-      Files.createFile(path);
-    } catch (IOException e) {
-      throw new RuntimeException("Could not delete/make diagnostics proto file", e);
-    }
+
   }
 
   private void createScalaDepsFile() {

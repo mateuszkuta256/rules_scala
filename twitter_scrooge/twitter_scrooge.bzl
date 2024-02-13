@@ -244,10 +244,6 @@ def _compile_generated_scala(
         label.name + "_scalac.statsfile",
         sibling = scrooge_jar,
     )
-    diagnosticsfile = ctx.actions.declare_file(
-        label.name + "_scalac.diagnosticsproto",
-        sibling = scrooge_jar,
-    )
 
     scaladepsfile = ctx.actions.declare_file(
         label.name + ".sdeps",
@@ -267,7 +263,6 @@ def _compile_generated_scala(
         output,
         manifest,
         statsfile,
-        diagnosticsfile,
         scaladepsfile,
         sources = [],
         cjars = merged_deps.transitive_compile_time_jars,
