@@ -42,7 +42,7 @@ java_binary(
     ],
     main_class = "io.bazel.rulesscala.scalac.ScalacWorker",
     visibility = ["//visibility:public"],
-    deps = SCALAC_DEPS + ["//src/java/io/bazel/rulesscala/scalac/reporter:reporter_before_2_12_13"],
+    deps = ["//third_party/dependency_analyzer/src/main/io/bazel/rulesscala/dependencyanalyzer/compiler:dep_reporting_compiler"] + SCALAC_DEPS + ["//src/java/io/bazel/rulesscala/scalac/reporter:reporter_before_2_12_13"],
 )
 
 java_binary(
@@ -56,7 +56,7 @@ java_binary(
     ],
     main_class = "io.bazel.rulesscala.scalac.ScalacWorker",
     visibility = ["//visibility:public"],
-    deps = SCALAC_DEPS + ["//src/java/io/bazel/rulesscala/scalac/reporter:reporter_after_2_12_13_and_before_2_13_12"],
+    deps = ["//third_party/dependency_analyzer/src/main/io/bazel/rulesscala/dependencyanalyzer/compiler:dep_reporting_compiler"] + SCALAC_DEPS + ["//src/java/io/bazel/rulesscala/scalac/reporter:reporter_after_2_12_13_and_before_2_13_12"],
 )
 
 java_binary(
@@ -70,7 +70,7 @@ java_binary(
     ],
     main_class = "io.bazel.rulesscala.scalac.ScalacWorker",
     visibility = ["//visibility:public"],
-    deps = SCALAC_DEPS + ["//src/java/io/bazel/rulesscala/scalac/reporter:reporter_after_2_13_12"],
+    deps = ["//third_party/dependency_analyzer/src/main/io/bazel/rulesscala/dependencyanalyzer/compiler:dep_reporting_compiler"] + SCALAC_DEPS + ["//src/java/io/bazel/rulesscala/scalac/reporter:reporter_after_2_13_12"],
 )
 
 java_binary(
@@ -99,6 +99,62 @@ java_binary(
     main_class = "io.bazel.rulesscala.scalac.ScalacWorker",
     visibility = ["//visibility:public"],
     deps = SCALAC_DEPS + ["//src/java/io/bazel/rulesscala/scalac/reporter:reporter"],
+)
+
+java_binary(
+    name = "scalac_bootstrap_before_2_12_13",
+    srcs = [
+        ":scalac2_files",
+    ],
+    javacopts = [
+        "-source 1.8",
+        "-target 1.8",
+    ],
+    main_class = "io.bazel.rulesscala.scalac.ScalacWorker",
+    visibility = ["//visibility:public"],
+    deps = SCALAC_DEPS + ["//src/java/io/bazel/rulesscala/scalac/reporter:reporter_before_2_12_13"],
+)
+
+java_binary(
+    name = "scalac_bootstrap_after_2_12_13_and_before_2_13_12",
+    srcs = [
+        ":scalac2_files",
+    ],
+    javacopts = [
+        "-source 1.8",
+        "-target 1.8",
+    ],
+    main_class = "io.bazel.rulesscala.scalac.ScalacWorker",
+    visibility = ["//visibility:public"],
+    deps = SCALAC_DEPS + ["//src/java/io/bazel/rulesscala/scalac/reporter:reporter_after_2_12_13_and_before_2_13_12"],
+)
+
+java_binary(
+    name = "scalac_bootstrap_after_2_13_12",
+    srcs = [
+        ":scalac2_files",
+    ],
+    javacopts = [
+        "-source 1.8",
+        "-target 1.8",
+    ],
+    main_class = "io.bazel.rulesscala.scalac.ScalacWorker",
+    visibility = ["//visibility:public"],
+    deps = SCALAC_DEPS + ["//src/java/io/bazel/rulesscala/scalac/reporter:reporter_after_2_13_12"],
+)
+
+java_binary(
+    name = "scalac_bootstrap_3",
+    srcs = [
+        ":scalac3_files",
+    ],
+    javacopts = [
+        "-source 1.8",
+        "-target 1.8",
+    ],
+    main_class = "io.bazel.rulesscala.scalac.ScalacWorker",
+    visibility = ["//visibility:public"],
+    deps = SCALAC_DEPS
 )
 
 filegroup(
