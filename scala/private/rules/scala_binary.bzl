@@ -89,7 +89,7 @@ def make_scala_binary(*extras):
         toolchains = [
             "@io_bazel_rules_scala//scala:toolchain_type",
             "@bazel_tools//tools/jdk:toolchain_type",
-        ],
+        ] + (["@io_bazel_rules_scala//scala/scalafmt/toolchain:scalafmt_toolchain_type"] if hasattr(extras, "format") else []),
         incompatible_use_toolchain_transition = True,
         cfg = scala_version_transition,
         implementation = _scala_binary_impl,
