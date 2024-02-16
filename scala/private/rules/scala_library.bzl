@@ -11,7 +11,7 @@ load(
     "resolve_deps",
 )
 load("@io_bazel_rules_scala//scala/private:common_outputs.bzl", "common_outputs")
-load("@io_bazel_rules_scala//scala/versions:versions.bzl", "scala_version_transition", "toolchain_transition_attr")
+load("@io_bazel_rules_scala//scala/versions:versions.bzl", "cross_build_attrs", "scala_version_transition")
 load(
     "@io_bazel_rules_scala//scala/private:coverage_replacements_provider.bzl",
     _coverage_replacements_provider = "coverage_replacements_provider",
@@ -88,12 +88,11 @@ _scala_library_attrs.update(_library_attrs)
 
 _scala_library_attrs.update(resolve_deps)
 
-_scala_library_attrs.update(toolchain_transition_attr)
-
-def make_scala_library(*extras):
+def make_scala_library(*extras, scala_version = None):
     return rule(
         attrs = _dicts.add(
             _scala_library_attrs,
+            cross_build_attrs(scala_version),
             extras_phases(extras),
             *[extra["attrs"] for extra in extras if "attrs" in extra]
         ),
@@ -248,6 +247,17 @@ _scala_macro_library_attrs.update(common_attrs)
 _scala_macro_library_attrs.update(_library_attrs)
 
 _scala_macro_library_attrs.update(resolve_deps)
+
+_scala_macro_library_attrs.update(
+    {
+        "_scalac": attr.label(
+            executable = True,
+            cfg = "exec",
+            default = Label("@io_bazel_rules_scala//src/java/io/bazel/rulesscala/scalac:scalac"),
+            allow_files = True,
+        ),
+    },
+)
 
 # Set unused_dependency_checker_mode default to off for scala_macro_library
 _scala_macro_library_attrs["unused_dependency_checker_mode"] = attr.string(

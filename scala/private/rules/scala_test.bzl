@@ -9,6 +9,7 @@ load(
 )
 load("@io_bazel_rules_scala//scala/private:common.bzl", "sanitize_string_for_usage")
 load("@io_bazel_rules_scala//scala/private:common_outputs.bzl", "common_outputs")
+load("@io_bazel_rules_scala//scala/versions:versions.bzl", "cross_build_attrs", "scala_version_transition")
 load(
     "@io_bazel_rules_scala//scala/private:phases/phases.bzl",
     "extras_phases",
@@ -108,10 +109,11 @@ _scala_test_attrs.update(common_attrs)
 
 _scala_test_attrs.update(_test_resolve_deps)
 
-def make_scala_test(*extras):
+def make_scala_test(*extras, scala_version = None):
     return rule(
         attrs = _dicts.add(
             _scala_test_attrs,
+            cross_build_attrs(scala_version),
             extras_phases(extras),
             *[extra["attrs"] for extra in extras if "attrs" in extra]
         ),
@@ -126,6 +128,7 @@ def make_scala_test(*extras):
             "@io_bazel_rules_scala//scala:toolchain_type",
             "@bazel_tools//tools/jdk:toolchain_type",
         ],
+        cfg = scala_version_transition,
         incompatible_use_toolchain_transition = True,
         implementation = _scala_test_impl,
     )

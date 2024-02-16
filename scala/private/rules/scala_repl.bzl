@@ -9,6 +9,7 @@ load(
     "resolve_deps",
 )
 load("@io_bazel_rules_scala//scala/private:common_outputs.bzl", "common_outputs")
+load("@io_bazel_rules_scala//scala/versions:versions.bzl", "cross_build_attrs", "scala_version_transition")
 load(
     "@io_bazel_rules_scala//scala/private:phases/phases.bzl",
     "extras_phases",
@@ -65,10 +66,11 @@ _scala_repl_attrs.update(common_attrs)
 
 _scala_repl_attrs.update(resolve_deps)
 
-def make_scala_repl(*extras):
+def make_scala_repl(*extras, scala_version = None):
     return rule(
         attrs = _dicts.add(
             _scala_repl_attrs,
+            cross_build_attrs(scala_version),
             extras_phases(extras),
             *[extra["attrs"] for extra in extras if "attrs" in extra]
         ),
@@ -79,6 +81,7 @@ def make_scala_repl(*extras):
             *[extra["outputs"] for extra in extras if "outputs" in extra]
         ),
         toolchains = ["@io_bazel_rules_scala//scala:toolchain_type"],
+        cfg = scala_version_transition,
         incompatible_use_toolchain_transition = True,
         implementation = _scala_repl_impl,
     )

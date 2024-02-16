@@ -8,6 +8,7 @@ load(
     "launcher_template",
 )
 load("@io_bazel_rules_scala//scala/private:common_outputs.bzl", "common_outputs")
+load("@io_bazel_rules_scala//scala/versions:versions.bzl", "cross_build_attrs", "scala_version_transition")
 load(
     "@io_bazel_rules_scala//scala/private:phases/phases.bzl",
     "extras_phases",
@@ -123,10 +124,11 @@ _scala_junit_test_attrs.update({
     "tests_from": attr.label_list(providers = [[JavaInfo]]),
 })
 
-def make_scala_junit_test(*extras):
+def make_scala_junit_test(*extras, scala_version = None):
     return rule(
         attrs = _dicts.add(
             _scala_junit_test_attrs,
+            cross_build_attrs(scala_version),
             extras_phases(extras),
             *[extra["attrs"] for extra in extras if "attrs" in extra]
         ),
@@ -140,6 +142,7 @@ def make_scala_junit_test(*extras):
             "@io_bazel_rules_scala//scala:toolchain_type",
             "@bazel_tools//tools/jdk:toolchain_type",
         ],
+        cfg = scala_version_transition,
         incompatible_use_toolchain_transition = True,
         implementation = _scala_junit_test_impl,
     )
