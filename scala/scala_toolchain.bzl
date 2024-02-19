@@ -102,6 +102,7 @@ def _scala_toolchain_impl(ctx):
         semanticdb_bundle_in_jar = ctx.attr.semanticdb_bundle_in_jar,
         use_argument_file_in_runner = ctx.attr.use_argument_file_in_runner,
         scala_version = ctx.attr.scala_version,
+        compiler = ctx.attr.scalac.files_to_run if ctx.attr.scalac else None,
     )
     return [toolchain]
 
@@ -175,6 +176,11 @@ scala_toolchain = rule(
             doc = "Changes java binaries scripts (including tests) to use argument files and not classpath jars to improve performance, requires java > 8",
         ),
         "scala_version": attr.string(),
+        "scalac": attr.label(
+            executable = True,
+            cfg = "exec",
+            allow_files = True,
+        ),
     },
     fragments = ["java"],
 )

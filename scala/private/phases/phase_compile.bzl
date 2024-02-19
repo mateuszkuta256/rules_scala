@@ -392,16 +392,8 @@ def _interim_java_provider_for_java_compilation(scala_output):
     )
 
 def _select_scalac(ctx):
-    scala_version = ctx.toolchains["@io_bazel_rules_scala//scala:toolchain_type"].scala_version
-    if scala_version:
-        major_version = extract_major_version(scala_version)
-        minor_version = extract_minor_version(scala_version)
-        if major_version.startswith("2.11") or (major_version.startswith("2.12") and int(minor_version) < 13):
-            return ctx.executable._scalac_before_2_12_13
-        if ((major_version.startswith("2.12") and int(minor_version) >= 13) or (major_version.startswith("2.13") and int(minor_version) < 12)):
-            return ctx.executable._scalac_after_2_12_13_and_before_2_13_12
-        if (major_version.startswith("2.13") and int(minor_version) >= 12):
-            return ctx.executable._scalac_after_2_13_12
-        if (major_version.startswith("3")):
-            return ctx.executable._scalac_3
-    return ctx.executable._scalac
+    compiler = ctx.toolchains["@io_bazel_rules_scala//scala:toolchain_type"].compiler
+    if (compiler):
+        return compiler
+    else:
+        return ctx.executable._scalac

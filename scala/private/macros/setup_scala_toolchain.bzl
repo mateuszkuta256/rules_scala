@@ -1,7 +1,7 @@
-load("//scala:scala_toolchain.bzl", "scala_toolchain")
-load("//scala:providers.bzl", "declare_deps_provider")
+load("@io_bazel_rules_scala//scala:scala_toolchain.bzl", "scala_toolchain")
+load("@io_bazel_rules_scala//scala:providers.bzl", "declare_deps_provider")
 load("@io_bazel_rules_scala_config//:config.bzl", "SCALA_VERSION", "SCALA_VERSIONS")
-load("//scala/versions:versions.bzl", "sanitize_version")
+load("@io_bazel_rules_scala//scala/versions:versions.bzl", "sanitize_version")
 
 _SCALA_COMPILE_CLASSPATH_DEPS = {
     "2": [
@@ -164,6 +164,7 @@ def setup_scala_toolchain(
         dep_providers = dep_providers,
         enable_semanticdb = enable_semanticdb,
         visibility = visibility,
+        scalac = "@scala_%s//:scalac" % sanitize_version(scala_version) if (scala_version) else None,
         **kwargs
     )
 
@@ -171,7 +172,7 @@ def setup_scala_toolchain(
         name = name,
         toolchain = ":%s_impl" % name,
         toolchain_type = "@io_bazel_rules_scala//scala:toolchain_type",
-        target_settings = ["//scala/versions:" + sanitize_version(scala_version)] if scala_version else [],
+        target_settings = ["@io_bazel_rules_scala//scala/versions:" + sanitize_version(scala_version)] if scala_version else [],
         visibility = visibility,
     )
 
@@ -201,19 +202,27 @@ def setup_scala_toolchains():
         strict_deps_mode = "error",
         unused_dependency_checker_mode = "error",
     )
-    for scala_version in SCALA_VERSIONS:
-        sanitized_scala_version = sanitize_version(scala_version)
-        setup_scala_toolchain(
-            name = sanitized_scala_version + "_toolchain",
-            scala_version = scala_version,
-            parser_combinators_deps = _deps_with_version_suffix(sanitized_scala_version, _PARSER_COMBINATORS_DEPS),
-            scala_compile_classpath = _deps_with_version_suffix(sanitized_scala_version, _SCALA_COMPILE_CLASSPATH_DEPS),
-            scala_library_classpath = _deps_with_version_suffix(sanitized_scala_version, _SCALA_LIBRARY_CLASSPATH_DEPS),
-            scala_macro_classpath = _deps_with_version_suffix(sanitized_scala_version, _SCALA_MACRO_CLASSPATH_DEPS),
-            scala_xml_deps = _deps_with_version_suffix(sanitized_scala_version, _SCALA_XML_DEPS),
-            semanticdb_deps = _deps_with_version_suffix(sanitized_scala_version, _SCALA_SEMANTICDB_DEPS),
-            use_argument_file_in_runner = True,
-        )
+
+def setup_additional_toolchain(
+        scala_version,
+        parser_combinators_deps = None,
+        scala_compile_classpath = None,
+        scala_library_classpath = None,
+        scala_macro_classpath = None,
+        scala_xml_deps = None,
+        semanticdb_deps = None):
+    sanitized_scala_version = sanitize_version(scala_version)
+    setup_scala_toolchain(
+        name = sanitized_scala_version + "_toolchain",
+        scala_version = scala_version,
+        parser_combinators_deps = parser_combinators_deps or _deps_with_version_suffix(sanitized_scala_version, _PARSER_COMBINATORS_DEPS),
+        scala_compile_classpath = scala_compile_classpath or _deps_with_version_suffix(sanitized_scala_version, _SCALA_COMPILE_CLASSPATH_DEPS),
+        scala_library_classpath = scala_library_classpath or _deps_with_version_suffix(sanitized_scala_version, _SCALA_LIBRARY_CLASSPATH_DEPS),
+        scala_macro_classpath = scala_macro_classpath or _deps_with_version_suffix(sanitized_scala_version, _SCALA_MACRO_CLASSPATH_DEPS),
+        scala_xml_deps = scala_xml_deps or _deps_with_version_suffix(sanitized_scala_version, _SCALA_XML_DEPS),
+        semanticdb_deps = semanticdb_deps or _deps_with_version_suffix(sanitized_scala_version, _SCALA_SEMANTICDB_DEPS),
+        use_argument_file_in_runner = True,
+    )
 
 def _deps_with_version_suffix(version, deps):
     return [dep + "_" + version for dep in deps[version[0:1]]]

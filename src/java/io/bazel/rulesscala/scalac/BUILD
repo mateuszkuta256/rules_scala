@@ -28,63 +28,7 @@ java_binary(
     ],
     main_class = "io.bazel.rulesscala.scalac.ScalacWorker",
     visibility = ["//visibility:public"],
-    deps = DEP_REPORTING_DEPS + SCALAC_DEPS + ["//src/java/io/bazel/rulesscala/scalac/reporter:reporter"],
-)
-
-java_binary(
-    name = "scalac_before_2_12_13",
-    srcs = [
-        ":scalac2_files",
-    ],
-    javacopts = [
-        "-source 1.8",
-        "-target 1.8",
-    ],
-    main_class = "io.bazel.rulesscala.scalac.ScalacWorker",
-    visibility = ["//visibility:public"],
-    deps = SCALAC_DEPS + ["//src/java/io/bazel/rulesscala/scalac/reporter:reporter_before_2_12_13"],
-)
-
-java_binary(
-    name = "scalac_after_2_12_13_and_before_2_13_12",
-    srcs = [
-        ":scalac2_files",
-    ],
-    javacopts = [
-        "-source 1.8",
-        "-target 1.8",
-    ],
-    main_class = "io.bazel.rulesscala.scalac.ScalacWorker",
-    visibility = ["//visibility:public"],
-    deps = SCALAC_DEPS + ["//src/java/io/bazel/rulesscala/scalac/reporter:reporter_after_2_12_13_and_before_2_13_12"],
-)
-
-java_binary(
-    name = "scalac_after_2_13_12",
-    srcs = [
-        ":scalac2_files",
-    ],
-    javacopts = [
-        "-source 1.8",
-        "-target 1.8",
-    ],
-    main_class = "io.bazel.rulesscala.scalac.ScalacWorker",
-    visibility = ["//visibility:public"],
-    deps = SCALAC_DEPS + ["//src/java/io/bazel/rulesscala/scalac/reporter:reporter_after_2_13_12"],
-)
-
-java_binary(
-    name = "scalac_3",
-    srcs = [
-        ":scalac3_files",
-    ],
-    javacopts = [
-        "-source 1.8",
-        "-target 1.8",
-    ],
-    main_class = "io.bazel.rulesscala.scalac.ScalacWorker",
-    visibility = ["//visibility:public"],
-    deps = SCALAC_DEPS + ["//src/java/io/bazel/rulesscala/scalac/reporter:reporter_3"],
+    deps = DEP_REPORTING_DEPS + SCALAC_DEPS + ["//src/java/io/bazel/rulesscala/scalac/reporter"],
 )
 
 java_binary(
@@ -98,14 +42,14 @@ java_binary(
     ],
     main_class = "io.bazel.rulesscala.scalac.ScalacWorker",
     visibility = ["//visibility:public"],
-    deps = SCALAC_DEPS + ["//src/java/io/bazel/rulesscala/scalac/reporter:reporter"],
+    deps = SCALAC_DEPS + ["//src/java/io/bazel/rulesscala/scalac/reporter"],
 )
 
 filegroup(
     name = "scalac_files",
     srcs = [
-        "ScalacWorker.java",
         "ScalacInvokerResults.java",
+        "ScalacWorker.java",
     ] + (
         [
             "ScalacInvoker.java",
@@ -115,21 +59,27 @@ filegroup(
     visibility = ["//visibility:public"],
 )
 
-filegroup(
-    name = "scalac2_files",
+load("//scala:bootstrap.bzl", "source_jar")
+
+source_jar(
+    name = "scalac_2",
     srcs = [
         "ReportableMainClass.java",
         "ScalacInvoker.java",
         "ScalacInvokerResults.java",
         "ScalacWorker.java",
     ],
+    outs = "scalac_2.srcjar",
+    visibility = ["//visibility:public"],
 )
 
-filegroup(
-    name = "scalac3_files",
+source_jar(
+    name = "scalac_3",
     srcs = [
         "ScalacInvoker3.java",
         "ScalacInvokerResults.java",
         "ScalacWorker.java",
     ],
+    outs = "scalac_3.srcjar",
+    visibility = ["//visibility:public"],
 )

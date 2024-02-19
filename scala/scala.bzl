@@ -11,6 +11,7 @@ load(
 load(
     "@io_bazel_rules_scala//scala/private:macros/setup_scala_toolchain.bzl",
     _declare_dep_providers = "declare_dep_providers",
+    _setup_additional_toolchain = "setup_additional_toolchain",
     _setup_scala_toolchain = "setup_scala_toolchain",
     _setup_scala_toolchains = "setup_scala_toolchains",
 )
@@ -84,4 +85,5 @@ scala_test_suite = _scala_test_suite
 setup_scala_testing_toolchain = _setup_scala_testing_toolchain
 setup_scala_toolchain = _setup_scala_toolchain
 setup_scala_toolchains = _setup_scala_toolchains
+setup_additional_toolchain = _setup_additional_toolchain
 declare_dep_providers = _declare_dep_providers
