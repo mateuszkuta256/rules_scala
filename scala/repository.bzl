@@ -1,5 +1,12 @@
 load("//scala/versions:versions.bzl", "sanitize_version")
-load("@io_bazel_rules_scala_config//:config.bzl", "SCALA_VERSIONS")
+load("@io_bazel_rules_scala_config//:config.bzl", "SCALA_VERSION", "SCALA_VERSIONS")
+
+def _scalac_runtime_impl(repository_ctx):
+    build = """
+load("@io_bazel_rules_scala//scala:bootstrap.bzl", "scalac")
+scalac("{scala_version}")
+""".format(scala_version = repository_ctx.attr.scala_version)
+    repository_ctx.file("BUILD", build)
 
 def _scala_runtime_impl(repository_ctx):
     build = """
@@ -40,6 +47,13 @@ _scala_runtime = repository_rule(
     },
 )
 
+_scalac_runtime = repository_rule(
+    _scalac_runtime_impl,
+    attrs = {
+        "scala_version": attr.string(),
+    },
+)
+
 def register_additional_scala_toolchain(
         scala_version,
         parser_combinators_deps = None,
@@ -60,5 +74,9 @@ def register_additional_scala_toolchain(
     )
 
 def register_additional_scala_toolchains():
+    _scalac_runtime(
+        name = "scala_default",
+        scala_version = SCALA_VERSION,
+    )
     for scala_version in SCALA_VERSIONS:
         register_additional_scala_toolchain(scala_version)
