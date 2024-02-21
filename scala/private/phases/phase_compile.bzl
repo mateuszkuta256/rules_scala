@@ -394,6 +394,6 @@ def _interim_java_provider_for_java_compilation(scala_output):
 def _select_scalac(ctx):
     compiler = ctx.toolchains["@io_bazel_rules_scala//scala:toolchain_type"].compiler
     if (compiler):
-        return compiler
+        return compiler.files_to_run
     else:
         return ctx.executable._scalac
