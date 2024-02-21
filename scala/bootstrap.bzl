@@ -18,10 +18,10 @@ _SCALA_COMPILE_CLASSPATH_DEPS = {
     ],
 }
 
-def scalac(scala_version, compile_classpath = None):
+def scalac(scala_version, compile_classpath = None, append_version = True):
     scala_major_version = extract_major_version(scala_version)
     scala_minor_version = extract_minor_version(scala_version)
-    compiler_deps = compile_classpath or _compiler_deps(scala_version)
+    compiler_deps = compile_classpath or _compiler_deps(scala_version, append_version)
 
     java_library(
         name = "scalac_reporter",
@@ -52,9 +52,12 @@ def scalac(scala_version, compile_classpath = None):
         ],
     )
 
-def _compiler_deps(scala_version):
-    suffix = "_" + sanitize_version(scala_version)
-    return [dep + suffix for dep in _SCALA_COMPILE_CLASSPATH_DEPS[scala_version[0:1]]]
+def _compiler_deps(scala_version, append_version):
+    if append_version:
+        suffix = "_" + sanitize_version(scala_version)
+        return [dep + suffix for dep in _SCALA_COMPILE_CLASSPATH_DEPS[scala_version[0:1]]]
+    else:
+        return _SCALA_COMPILE_CLASSPATH_DEPS[scala_version[0:1]]
 
 def _reporter_srcs(scala_major_version, scala_minor_version):
     if (scala_major_version == "2.11") or (scala_major_version == "2.12" and int(scala_minor_version) < 13):

@@ -4,7 +4,7 @@ load("@io_bazel_rules_scala_config//:config.bzl", "SCALA_VERSION", "SCALA_VERSIO
 def _scalac_runtime_impl(repository_ctx):
     build = """
 load("@io_bazel_rules_scala//scala:bootstrap.bzl", "scalac")
-scalac("{scala_version}")
+scalac(scala_version = "{scala_version}", append_version = False)
 """.format(scala_version = repository_ctx.attr.scala_version)
     repository_ctx.file("BUILD", build)
 
