@@ -4,6 +4,7 @@ load(
     "ENABLE_COMPILER_DEPENDENCY_TRACKING",
     "SCALA_MAJOR_VERSION",
 )
+load("//scala:bootstrap.bzl", "source_jar")
 
 SCALAC_DEPS = [
     "//scala/private/toolchain_deps:scala_compile_classpath",
@@ -58,8 +59,6 @@ filegroup(
     ),
     visibility = ["//visibility:public"],
 )
-
-load("//scala:bootstrap.bzl", "source_jar")
 
 source_jar(
     name = "scalac_2",

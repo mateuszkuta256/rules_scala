@@ -1,6 +1,7 @@
 load("@rules_proto//proto:defs.bzl", "proto_library")
 load("@rules_java//java:defs.bzl", "java_library", "java_proto_library")
 load("@io_bazel_rules_scala_config//:config.bzl", "SCALA_MAJOR_VERSION", "SCALA_MINOR_VERSION")
+load("//scala:bootstrap.bzl", "source_jar")
 
 java_library(
     name = "reporter",
@@ -91,8 +92,6 @@ java_proto_library(
     visibility = ["//visibility:public"],
     deps = [":scala_deps_proto"],
 )
-
-load("//scala:bootstrap.bzl", "source_jar")
 
 [
     source_jar(

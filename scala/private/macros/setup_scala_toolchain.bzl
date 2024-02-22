@@ -1,6 +1,6 @@
 load("@io_bazel_rules_scala//scala:scala_toolchain.bzl", "scala_toolchain")
 load("@io_bazel_rules_scala//scala:providers.bzl", "declare_deps_provider")
-load("@io_bazel_rules_scala_config//:config.bzl", "SCALA_VERSION", "SCALA_VERSIONS")
+load("@io_bazel_rules_scala_config//:config.bzl", "SCALA_VERSION")
 load("@io_bazel_rules_scala//scala/versions:versions.bzl", "sanitize_version")
 
 _SCALA_COMPILE_CLASSPATH_DEPS = {

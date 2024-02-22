@@ -1,4 +1,5 @@
 load("@io_bazel_rules_scala_config//:config.bzl", "SCALA_MAJOR_VERSION", "SCALA_MINOR_VERSION")
+load("//scala:bootstrap.bzl", "source_jar")
 
 filegroup(
     name = "deps_tracking_reporter",
@@ -35,8 +36,6 @@ filegroup(
     ],
     visibility = ["//visibility:public"],
 )
-
-load("//scala:bootstrap.bzl", "source_jar")
 
 [
     source_jar(
