@@ -8,6 +8,9 @@ load(
     "launcher_template",
 )
 load("@io_bazel_rules_scala//scala/private:common.bzl", "sanitize_string_for_usage")
+load("@io_bazel_rules_scala//scala/versions:versions.bzl", "scala_version_transition", "toolchain_transition_attr")
+load("@io_bazel_rules_scala_config//:config.bzl", "SCALA_VERSIONS")
+load("//scala/versions:versions.bzl", "sanitize_version")
 load("@io_bazel_rules_scala//scala/private:common_outputs.bzl", "common_outputs")
 load(
     "@io_bazel_rules_scala//scala/private:phases/phases.bzl",
@@ -75,8 +78,10 @@ _scala_test_attrs = {
         cfg = "exec",
         default = Label("//src/java/io/bazel/rulesscala/scala_test:runner"),
     ),
-    "_scalatest_reporter": attr.label(
-        default = Label("//scala/support:test_reporter"),
+    "_scalatest_reporter": attr.label_list(
+        default = [
+            Label("//scala/support:test_reporter"),
+        ] + [Label("//scala/support:test_reporter_" + sanitize_version(v)) for v in SCALA_VERSIONS],
     ),
     "_lcov_merger": attr.label(
         default = Label("@bazel_tools//tools/test/CoverageOutputGenerator/java/com/google/devtools/coverageoutputgenerator:Main"),
@@ -108,6 +113,8 @@ _scala_test_attrs.update(common_attrs)
 
 _scala_test_attrs.update(_test_resolve_deps)
 
+_scala_test_attrs.update(toolchain_transition_attr)
+
 def make_scala_test(*extras):
     return rule(
         attrs = _dicts.add(
@@ -124,8 +131,10 @@ def make_scala_test(*extras):
         test = True,
         toolchains = [
             "@io_bazel_rules_scala//scala:toolchain_type",
+            "@io_bazel_rules_scala//testing/toolchain:testing_toolchain_type",
             "@bazel_tools//tools/jdk:toolchain_type",
         ],
+        cfg = scala_version_transition,
         incompatible_use_toolchain_transition = True,
         implementation = _scala_test_impl,
     )
