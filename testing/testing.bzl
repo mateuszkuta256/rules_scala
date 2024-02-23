@@ -138,6 +138,7 @@ def setup_scala_toolchains():
         scala_version_suffix = "_" + sanitize_version(scala_version)
         setup_scala_testing_toolchain(
             name = "scalatest_toolchain" + scala_version_suffix,
+            scala_version = scala_version,
             scalatest_classpath = [dep + scala_version_suffix for dep in _SCALATEST_DEPS],
             visibility = ["//visibility:public"],
         )
