@@ -103,7 +103,7 @@ def phase_compile_common(ctx, p):
     return _phase_compile_default(ctx, p)
 
 def _phase_compile_default(ctx, p, _args = struct()):
-    scala_version = ctx.attr.scala_version if hasattr(ctx.attr, "scala_version") else SCALA_VERSION
+    scala_version = ctx.attr.scala_version if hasattr(ctx.attr, "scala_version") and ctx.attr.scala_version != "" else SCALA_VERSION
     buildijar_default_value = True if scala_version.startswith("2.") else False
 
     return _phase_compile(
