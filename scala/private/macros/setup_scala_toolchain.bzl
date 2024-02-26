@@ -160,10 +160,10 @@ def setup_scala_toolchain(
 
     scala_toolchain(
         name = "%s_impl" % name,
-        scala_version = scala_version,
         dep_providers = dep_providers,
         enable_semanticdb = enable_semanticdb,
         visibility = visibility,
+        scalac = Label("@io_bazel_rules_scala//src/java/io/bazel/rulesscala/scalac:scalac_" + sanitize_version(scala_version)) if scala_version else None,
         **kwargs
     )
 
