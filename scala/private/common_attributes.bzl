@@ -8,6 +8,8 @@ load(
     "@io_bazel_rules_scala//scala:plusone.bzl",
     _collect_plus_one_deps_aspect = "collect_plus_one_deps_aspect",
 )
+load("//scala/versions:versions.bzl", "sanitize_version")
+load("@io_bazel_rules_scala_config//:config.bzl", "SCALA_VERSIONS")
 
 common_attrs_for_plugin_bootstrapping = {
     "srcs": attr.label_list(allow_files = [
@@ -84,35 +86,10 @@ implicit_deps = {
     "_java_runtime": attr.label(
         default = Label("@bazel_tools//tools/jdk:current_java_runtime"),
     ),
-    "_scalac": attr.label(
-        executable = True,
-        cfg = "exec",
-        default = Label("@io_bazel_rules_scala//src/java/io/bazel/rulesscala/scalac"),
-        allow_files = True,
-    ),
-    "_scalac_before_2_12_13": attr.label(
-        executable = True,
-        cfg = "exec",
-        default = Label("@io_bazel_rules_scala//src/java/io/bazel/rulesscala/scalac:scalac_before_2_12_13"),
-        allow_files = True,
-    ),
-    "_scalac_after_2_12_13_and_before_2_13_12": attr.label(
-        executable = True,
-        cfg = "exec",
-        default = Label("@io_bazel_rules_scala//src/java/io/bazel/rulesscala/scalac:scalac_after_2_12_13_and_before_2_13_12"),
-        allow_files = True,
-    ),
-    "_scalac_after_2_13_12": attr.label(
-        executable = True,
-        cfg = "exec",
-        default = Label("@io_bazel_rules_scala//src/java/io/bazel/rulesscala/scalac:scalac_after_2_13_12"),
-        allow_files = True,
-    ),
-    "_scalac_3": attr.label(
-        executable = True,
-        cfg = "exec",
-        default = Label("@io_bazel_rules_scala//src/java/io/bazel/rulesscala/scalac:scalac_3"),
-        allow_files = True,
+    "_scalac": attr.label_list(
+        default = [
+            Label("@io_bazel_rules_scala//src/java/io/bazel/rulesscala/scalac"),
+        ] + [Label("@io_bazel_rules_scala//src/java/io/bazel/rulesscala/scalac:scalac_" + sanitize_version(version)) for version in SCALA_VERSIONS],
     ),
     "_exe": attr.label(
         executable = True,

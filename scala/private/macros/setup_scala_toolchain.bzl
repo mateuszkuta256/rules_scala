@@ -160,7 +160,6 @@ def setup_scala_toolchain(
 
     scala_toolchain(
         name = "%s_impl" % name,
-        scala_version = scala_version,
         dep_providers = dep_providers,
         enable_semanticdb = enable_semanticdb,
         visibility = visibility,

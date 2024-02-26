@@ -23,6 +23,7 @@ java_library(
     ],
 )
 
+#TODO prod version will register reporters automatically in a loop (SCALA_VERSIONS)
 java_library(
     name = "reporter_before_2_12_13",
     srcs = [
