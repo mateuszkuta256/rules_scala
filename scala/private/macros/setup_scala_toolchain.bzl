@@ -175,7 +175,7 @@ def setup_scala_toolchain(
         visibility = visibility,
     )
 
-def setup_scala_toolchains():
+def setup_scala_toolchains(override_deps = None):
     setup_scala_toolchain(
         name = "default_toolchain",
         scala_compile_classpath = _scala_compile_classpath_deps(),
@@ -202,18 +202,30 @@ def setup_scala_toolchains():
         unused_dependency_checker_mode = "error",
     )
     for scala_version in SCALA_VERSIONS:
-        sanitized_scala_version = sanitize_version(scala_version)
+        deps = _toolchain_dependencies(scala_version, override_deps)
         setup_scala_toolchain(
-            name = sanitized_scala_version + "_toolchain",
+            name = sanitize_version(scala_version) + "_toolchain",
             scala_version = scala_version,
-            parser_combinators_deps = _deps_with_version_suffix(sanitized_scala_version, _PARSER_COMBINATORS_DEPS),
-            scala_compile_classpath = _deps_with_version_suffix(sanitized_scala_version, _SCALA_COMPILE_CLASSPATH_DEPS),
-            scala_library_classpath = _deps_with_version_suffix(sanitized_scala_version, _SCALA_LIBRARY_CLASSPATH_DEPS),
-            scala_macro_classpath = _deps_with_version_suffix(sanitized_scala_version, _SCALA_MACRO_CLASSPATH_DEPS),
-            scala_xml_deps = _deps_with_version_suffix(sanitized_scala_version, _SCALA_XML_DEPS),
-            semanticdb_deps = _deps_with_version_suffix(sanitized_scala_version, _SCALA_SEMANTICDB_DEPS),
+            parser_combinators_deps = deps.parser_combinators_deps,
+            scala_compile_classpath = deps.scala_compile_classpath,
+            scala_library_classpath = deps.scala_library_classpath,
+            scala_macro_classpath = deps.scala_macro_classpath,
+            scala_xml_deps = deps.scala_xml_deps,
+            semanticdb_deps = deps.semanticdb_deps,
             use_argument_file_in_runner = True,
         )
+
+def _toolchain_dependencies(scala_version, override_deps):
+    version_suffix = sanitize_version(scala_version)
+    deps = override_deps.get(scala_version, {}) if override_deps else {}
+    return struct(
+        parser_combinators_deps = deps.get("parser_combinators_deps", _deps_with_version_suffix(version_suffix, _PARSER_COMBINATORS_DEPS)),
+        scala_compile_classpath = deps.get("scala_compile_classpath", _deps_with_version_suffix(version_suffix, _SCALA_COMPILE_CLASSPATH_DEPS)),
+        scala_library_classpath = deps.get("scala_library_classpath", _deps_with_version_suffix(version_suffix, _SCALA_LIBRARY_CLASSPATH_DEPS)),
+        scala_macro_classpath = deps.get("scala_macro_classpath", _deps_with_version_suffix(version_suffix, _SCALA_MACRO_CLASSPATH_DEPS)),
+        scala_xml_deps = deps.get("scala_xml_deps", _deps_with_version_suffix(version_suffix, _SCALA_XML_DEPS)),
+        semanticdb_deps = deps.get("semanticdb_deps", _deps_with_version_suffix(version_suffix, _SCALA_SEMANTICDB_DEPS)),
+    )
 
 def _deps_with_version_suffix(version, deps):
     return [dep + "_" + version for dep in deps[version[0:1]]]

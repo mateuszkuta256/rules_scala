@@ -6,7 +6,21 @@ toolchain_type(
     visibility = ["//visibility:public"],
 )
 
-setup_scala_toolchains()
+_DICT = {
+    "3.3.1": {
+        "scala_compile_classpath": [
+            "@io_bazel_rules_scala_scala_compiler",
+            "@io_bazel_rules_scala_scala_library",
+            "@io_bazel_rules_scala_scala_reflect",
+        ],
+        "scala_library_classpath": [
+            "@io_bazel_rules_scala_scala_library",
+            "@io_bazel_rules_scala_scala_reflect",
+        ],
+    },
+}
+
+setup_scala_toolchains(_DICT)
 
 java_import(
     name = "bazel_test_runner_deploy",
