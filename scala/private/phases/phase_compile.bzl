@@ -18,6 +18,8 @@ load(
 )
 load(":resources.bzl", _resource_paths = "paths")
 load("@io_bazel_rules_scala_config//:config.bzl", "SCALA_VERSION")
+load("@io_bazel_rules_scala//scala:scala_cross_version.bzl", "extract_major_version", "extract_minor_version")
+load("//scala/versions:versions.bzl", "sanitize_version")
 
 buildijar_default_value = True if SCALA_VERSION.startswith("2.") else False
 
@@ -221,7 +223,7 @@ def _compile_or_empty(
             ctx.attr.expect_java_output,
             ctx.attr.scalac_jvm_flags,
             scalacopts,
-            ctx.executable._scalac,
+            _select_scalac(ctx),
             dependency_info,
             unused_dependency_checker_ignored_targets,
             additional_outputs,
@@ -390,3 +392,9 @@ def _interim_java_provider_for_java_compilation(scala_output):
         compile_jar = scala_output,
         neverlink = True,
     )
+
+def _select_scalac(ctx):
+    scalac = ctx.toolchains["@io_bazel_rules_scala//scala:toolchain_type"].scalac
+    if (scalac):
+        return scalac.files_to_run
+    return ctx.attr._scalac
