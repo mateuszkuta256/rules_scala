@@ -1,6 +1,11 @@
 load("@rules_java//java:defs.bzl", "java_binary", "java_library")
 load("//scala/versions:versions.bzl", "sanitize_version")
-load("@io_bazel_rules_scala_config//:config.bzl", "SCALA_VERSIONS")
+load(
+    "@io_bazel_rules_scala_config//:config.bzl",
+    "ENABLE_COMPILER_DEPENDENCY_TRACKING",
+    "ENABLE_COMPILER_DEPENDENCY_TRACKING_CONFIG",
+    "SCALA_VERSIONS",
+)
 load("@io_bazel_rules_scala//scala:scala_cross_version.bzl", "extract_major_version", "extract_minor_version")
 
 def setup_scalac():
@@ -21,7 +26,7 @@ def _scalac(scala_version):
             "-source 1.8",
             "-target 1.8",
         ],
-        deps = [
+        deps = _dep_reporting_dep(scala_version) + [
             _reporter(scala_major_version, scala_minor_version),
             "//scala/private/toolchain_deps:scala_compile_classpath",
             "//src/java/io/bazel/rulesscala/io_utils",
@@ -32,6 +37,13 @@ def _scalac(scala_version):
             "//src/java/io/bazel/rulesscala/scalac/compileoptions",
         ],
     )
+
+def _dep_reporting_dep(scala_version):
+    enable_compiler_dependency_tracking = ENABLE_COMPILER_DEPENDENCY_TRACKING_CONFIG.get(scala_version, ENABLE_COMPILER_DEPENDENCY_TRACKING)
+    if enable_compiler_dependency_tracking and scala_version.startswith("2"):
+        return ["//third_party/dependency_analyzer/src/main/io/bazel/rulesscala/dependencyanalyzer/compiler:dep_reporting_compiler"]
+    else:
+        return []
 
 def _reporter(scala_major_version, scala_minor_version):
     if (scala_major_version == "2.11") or (scala_major_version == "2.12" and int(scala_minor_version) < 13):

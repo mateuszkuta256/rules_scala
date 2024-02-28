@@ -163,6 +163,7 @@ def setup_scala_toolchain(
         dep_providers = dep_providers,
         enable_semanticdb = enable_semanticdb,
         visibility = visibility,
+        scala_version = scala_version,
         **kwargs
     )
 

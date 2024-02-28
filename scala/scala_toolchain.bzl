@@ -5,6 +5,7 @@ load(
 load(
     "@io_bazel_rules_scala_config//:config.bzl",
     "ENABLE_COMPILER_DEPENDENCY_TRACKING",
+    "ENABLE_COMPILER_DEPENDENCY_TRACKING_CONFIG",
     "SCALA_MAJOR_VERSION",
 )
 
@@ -69,7 +70,7 @@ def _scala_toolchain_impl(ctx):
     if dependency_tracking_method not in ("ast-plus", "ast", "high-level"):
         fail("Internal error: invalid dependency_tracking_method " + dependency_tracking_method)
 
-    if "ast-plus" == dependency_tracking_method and not ENABLE_COMPILER_DEPENDENCY_TRACKING:
+    if "ast-plus" == dependency_tracking_method and not ENABLE_COMPILER_DEPENDENCY_TRACKING_CONFIG.get(ctx.attr.scala_version, ENABLE_COMPILER_DEPENDENCY_TRACKING):
         fail("To use 'ast-plus' dependency tracking, you must set 'enable_compiler_dependency_tracking' to True in scala_config")
 
     enable_stats_file = ctx.attr.enable_stats_file
@@ -173,6 +174,7 @@ scala_toolchain = rule(
             default = False,
             doc = "Changes java binaries scripts (including tests) to use argument files and not classpath jars to improve performance, requires java > 8",
         ),
+        "scala_version": attr.string(),
     },
     fragments = ["java"],
 )

@@ -26,6 +26,11 @@ def _store_config(repository_ctx):
         str(repository_ctx.attr.enable_compiler_dependency_tracking),
     )
 
+    enable_compiler_dependency_tracking_config = repository_ctx.os.environ.get(
+        "ENABLE_COMPILER_DEPENDENCY_TRACKING_CONFIG",
+        str(repository_ctx.attr.enable_compiler_dependency_tracking_config),
+    )
+
     scala_major_version = extract_major_version(scala_version)
 
     scala_minor_version = extract_minor_version(scala_version)
@@ -38,6 +43,7 @@ def _store_config(repository_ctx):
         "SCALA_MAJOR_VERSION='" + scala_major_version + "'",
         "SCALA_MINOR_VERSION='" + scala_minor_version + "'",
         "ENABLE_COMPILER_DEPENDENCY_TRACKING=" + enable_compiler_dependency_tracking,
+        "ENABLE_COMPILER_DEPENDENCY_TRACKING_CONFIG=" + enable_compiler_dependency_tracking_config,
     ])
 
     repository_ctx.file("config.bzl", config_file_content)
@@ -53,17 +59,27 @@ _config_repository = repository_rule(
         "enable_compiler_dependency_tracking": attr.bool(
             mandatory = True,
         ),
+        "enable_compiler_dependency_tracking_config": attr.string_dict(
+            mandatory = True,
+        ),
     },
-    environ = ["SCALA_VERSION", "SCALA_VERSIONS", "ENABLE_COMPILER_DEPENDENCY_TRACKING"],
+    environ = [
+        "SCALA_VERSION",
+        "SCALA_VERSIONS",
+        "ENABLE_COMPILER_DEPENDENCY_TRACKING",
+        "ENABLE_COMPILER_DEPENDENCY_TRACKING_CONFIG",
+    ],
 )
 
 def scala_config(
         scala_version = _default_scala_version(),
         scala_versions = [],
-        enable_compiler_dependency_tracking = False):
+        enable_compiler_dependency_tracking = False,
+        enable_compiler_dependency_tracking_config = {}):
     _config_repository(
         name = "io_bazel_rules_scala_config",
         scala_version = scala_version,
         scala_versions = scala_versions,
         enable_compiler_dependency_tracking = enable_compiler_dependency_tracking,
+        enable_compiler_dependency_tracking_config = enable_compiler_dependency_tracking_config,
     )
