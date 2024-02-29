@@ -1,6 +1,6 @@
 load("@rules_java//java:defs.bzl", "java_binary", "java_library")
 load("//scala/versions:versions.bzl", "sanitize_version")
-load("@io_bazel_rules_scala_config//:config.bzl", "SCALA_VERSION", "SCALA_VERSIONS")
+load("@io_bazel_rules_scala_config//:config.bzl", "SCALA_VERSIONS")
 load("@io_bazel_rules_scala//scala:scala_cross_version.bzl", "extract_major_version", "extract_minor_version")
 
 _SCALA_COMPILE_CLASSPATH_DEPS = {

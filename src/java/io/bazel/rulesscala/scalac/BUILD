@@ -4,6 +4,7 @@ load(
     "ENABLE_COMPILER_DEPENDENCY_TRACKING",
     "SCALA_MAJOR_VERSION",
 )
+load("//src/java/io/bazel/rulesscala/scalac:scalac.bzl", "setup_scalac", "source_jar")
 
 SCALAC_DEPS = [
     "//scala/private/toolchain_deps:scala_compile_classpath",
@@ -60,8 +61,6 @@ filegroup(
     visibility = ["//visibility:public"],
 )
 
-load("//src/java/io/bazel/rulesscala/scalac:scalac.bzl", "source_jar")
-
 source_jar(
     name = "scalac_2",
     srcs = [
@@ -84,7 +83,5 @@ source_jar(
     outs = "scalac_3.srcjar",
     visibility = ["//visibility:public"],
 )
-
-load("//src/java/io/bazel/rulesscala/scalac:scalac.bzl", "setup_scalac")
 
 setup_scalac()

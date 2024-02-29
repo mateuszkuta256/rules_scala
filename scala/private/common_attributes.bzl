@@ -8,8 +8,6 @@ load(
     "@io_bazel_rules_scala//scala:plusone.bzl",
     _collect_plus_one_deps_aspect = "collect_plus_one_deps_aspect",
 )
-load("//scala/versions:versions.bzl", "sanitize_version")
-load("@io_bazel_rules_scala_config//:config.bzl", "SCALA_VERSIONS")
 
 common_attrs_for_plugin_bootstrapping = {
     "srcs": attr.label_list(allow_files = [
