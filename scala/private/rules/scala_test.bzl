@@ -133,7 +133,7 @@ def make_scala_test(*extras):
             "@io_bazel_rules_scala//scala:toolchain_type",
             "@io_bazel_rules_scala//testing/toolchain:testing_toolchain_type",
             "@bazel_tools//tools/jdk:toolchain_type",
-        ],
+        ] + (["@io_bazel_rules_scala//scala/scalafmt/toolchain:scalafmt_toolchain_type"] if hasattr(extras, "format") else []),
         cfg = scala_version_transition,
         incompatible_use_toolchain_transition = True,
         implementation = _scala_test_impl,
