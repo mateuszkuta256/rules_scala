@@ -70,6 +70,6 @@ def _analyzer_scala_2(scala_version):
         deps = [
             ":scala_version" + version_suffix(scala_version),
             "//scala/private/toolchain_deps:scala_compile_classpath",
-            "//src/java/io/bazel/rulesscala/scalac/reporter",
+            "//src/java/io/bazel/rulesscala/scalac:scalac_reporter" + version_suffix(scala_version),
         ],
     )
