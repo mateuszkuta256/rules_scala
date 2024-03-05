@@ -176,13 +176,6 @@ def setup_scala_toolchain(
 
 def setup_scala_toolchains():
     setup_scala_toolchain(
-        name = "default_toolchain",
-        scala_compile_classpath = _scala_compile_classpath_deps(),
-        scala_library_classpath = _scala_library_classpath_deps(),
-        scala_macro_classpath = _scala_macro_classpath_deps(),
-        use_argument_file_in_runner = True,
-    )
-    setup_scala_toolchain(
         name = "unused_dependency_checker_error_toolchain",
         dependency_tracking_method = "ast-plus",
         scala_compile_classpath = _scala_compile_classpath_deps(),
@@ -201,18 +194,17 @@ def setup_scala_toolchains():
         unused_dependency_checker_mode = "error",
     )
     for scala_version in SCALA_VERSIONS:
-        if (scala_version != SCALA_VERSION):
-            setup_scala_toolchain(
-                name = sanitize_version(scala_version) + "_toolchain",
-                scala_version = scala_version,
-                parser_combinators_deps = _parser_combinators_deps(scala_version),
-                scala_compile_classpath = _scala_compile_classpath_deps(scala_version),
-                scala_library_classpath = _scala_library_classpath_deps(scala_version),
-                scala_macro_classpath = _scala_macro_classpath_deps(scala_version),
-                scala_xml_deps = _scala_xml_deps(scala_version),
-                semanticdb_deps = _scala_semanticdb_deps(scala_version),
-                use_argument_file_in_runner = True,
-            )
+        setup_scala_toolchain(
+            name = sanitize_version(scala_version) + "_toolchain",
+            scala_version = scala_version,
+            parser_combinators_deps = _parser_combinators_deps(scala_version),
+            scala_compile_classpath = _scala_compile_classpath_deps(scala_version),
+            scala_library_classpath = _scala_library_classpath_deps(scala_version),
+            scala_macro_classpath = _scala_macro_classpath_deps(scala_version),
+            scala_xml_deps = _scala_xml_deps(scala_version),
+            semanticdb_deps = _scala_semanticdb_deps(scala_version),
+            use_argument_file_in_runner = True,
+        )
 
 def _deps_with_version_suffix(version, deps):
     return [dep + "_" + version for dep in deps[version[0:1]]]

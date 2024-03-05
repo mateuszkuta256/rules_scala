@@ -63,4 +63,3 @@ def _register_scalaftm_toolchains():
         native.register_toolchains(
             "@io_bazel_rules_scala//scala/scalafmt:%s_scalafmt_toolchain" % sanitize_version(scala_version),
         )
-    native.register_toolchains("@io_bazel_rules_scala//scala/scalafmt:scalafmt_toolchain")

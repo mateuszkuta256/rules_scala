@@ -37,12 +37,6 @@ def setup_scalafmt_toolchain(
     )
 
 def setup_scalafmt_toolchains():
-    #    TODO register default toolchain only once
-    setup_scalafmt_toolchain(
-        name = "scalafmt_toolchain",
-        scala_version = SCALA_VERSION,
-        scalafmt_classpath = _deps(SCALA_VERSION),
-    )
     for scala_version in SCALA_VERSIONS:
         sanitized_scala_version = sanitize_version(scala_version)
         setup_scalafmt_toolchain(
