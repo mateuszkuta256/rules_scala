@@ -57,12 +57,8 @@ common_attrs = {}
 common_attrs.update(common_attrs_for_plugin_bootstrapping)
 
 common_attrs.update({
-    "_dependency_analyzer_plugin": attr.label(
-        default = Label(
-            "@io_bazel_rules_scala//third_party/dependency_analyzer/src/main:dependency_analyzer",
-        ),
-        allow_files = [".jar"],
-        mandatory = False,
+    "_dependency_analyzer_plugin": attr.label_list(
+        default = [Label("@io_bazel_rules_scala//third_party/dependency_analyzer/src/main:dependency_analyzer" + version_suffix(scala_version)) for scala_version in SCALA_VERSIONS],
     ),
     "unused_dependency_checker_mode": attr.string(
         values = [
