@@ -1,7 +1,7 @@
 load("//scala/scalafmt/toolchain:toolchain.bzl", "scalafmt_toolchain")
 load("//scala:providers.bzl", "declare_deps_provider")
 load("@io_bazel_rules_scala//scala:scala_cross_version.bzl", "sanitize_version")
-load("@io_bazel_rules_scala_config//:config.bzl", "SCALA_VERSION", "SCALA_VERSIONS")
+load("@io_bazel_rules_scala_config//:config.bzl", "SCALA_VERSIONS")
 
 _SCALAFMT_DEPS = [
     "@com_geirsson_metaconfig_core",
