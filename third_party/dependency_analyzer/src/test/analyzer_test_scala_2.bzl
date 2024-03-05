@@ -1,10 +1,10 @@
 load("//scala:scala.bzl", "scala_test")
 
-def analyzer_tests_scala_2():
+def analyzer_tests_scala_2(suffix):
     common_jvm_flags = [
-        "-Dplugin.jar.location=$(execpath //third_party/dependency_analyzer/src/main:dependency_analyzer)",
-        "-Dscala.library.location=$(rootpath @io_bazel_rules_scala_scala_library)",
-        "-Dscala.reflect.location=$(rootpath @io_bazel_rules_scala_scala_reflect)",
+        "-Dplugin.jar.location=$(execpath //third_party/dependency_analyzer/src/main:dependency_analyzer%s)" % suffix,
+        "-Dscala.library.location=$(rootpath @io_bazel_rules_scala_scala_library%s)" % suffix,
+        "-Dscala.reflect.location=$(rootpath @io_bazel_rules_scala_scala_reflect%s)" % suffix,
     ]
 
     scala_test(
@@ -16,10 +16,12 @@ def analyzer_tests_scala_2():
         jvm_flags = common_jvm_flags,
         deps = [
             "//src/java/io/bazel/rulesscala/io_utils",
-            "//third_party/dependency_analyzer/src/main:dependency_analyzer",
-            "//third_party/dependency_analyzer/src/main:scala_version",
+            "//third_party/dependency_analyzer/src/main:dependency_analyzer" + suffix,
+            "//third_party/dependency_analyzer/src/main:scala_version" + suffix,
             "//third_party/utils/src/test:test_util",
-            "//scala/private/toolchain_deps:scala_compile_classpath",
+            "@io_bazel_rules_scala_scala_compiler" + suffix,
+            "@io_bazel_rules_scala_scala_library" + suffix,
+            "@io_bazel_rules_scala_scala_reflect" + suffix,
         ],
     )
 
@@ -30,8 +32,9 @@ def analyzer_tests_scala_2():
             "io/bazel/rulesscala/dependencyanalyzer/ScalaVersionTest.scala",
         ],
         deps = [
-            "//third_party/dependency_analyzer/src/main:scala_version",
-            "//scala/private/toolchain_deps:scala_compile_classpath",
+            "//third_party/dependency_analyzer/src/main:scala_version" + suffix,
+            "@io_bazel_rules_scala_scala_library" + suffix,
+            "@io_bazel_rules_scala_scala_reflect" + suffix,
         ],
     )
 
@@ -45,9 +48,11 @@ def analyzer_tests_scala_2():
         unused_dependency_checker_mode = "off",
         deps = [
             "//src/java/io/bazel/rulesscala/io_utils",
-            "//third_party/dependency_analyzer/src/main:dependency_analyzer",
+            "//third_party/dependency_analyzer/src/main:dependency_analyzer" + suffix,
             "//third_party/utils/src/test:test_util",
-            "//scala/private/toolchain_deps:scala_compile_classpath",
+            "@io_bazel_rules_scala_scala_compiler" + suffix,
+            "@io_bazel_rules_scala_scala_library" + suffix,
+            "@io_bazel_rules_scala_scala_reflect" + suffix,
         ],
     )
 
@@ -63,10 +68,12 @@ def analyzer_tests_scala_2():
         ],
         unused_dependency_checker_mode = "off",
         deps = [
-            "//third_party/dependency_analyzer/src/main:dependency_analyzer",
+            "//third_party/dependency_analyzer/src/main:dependency_analyzer" + suffix,
             "//third_party/utils/src/test:test_util",
             "@com_google_guava_guava_21_0_with_file//jar",
-            "//scala/private/toolchain_deps:scala_compile_classpath",
+            "@io_bazel_rules_scala_scala_compiler" + suffix,
+            "@io_bazel_rules_scala_scala_library" + suffix,
+            "@io_bazel_rules_scala_scala_reflect" + suffix,
             "@org_apache_commons_commons_lang_3_5_without_file//:linkable_org_apache_commons_commons_lang_3_5_without_file",
         ],
     )
@@ -82,9 +89,11 @@ def analyzer_tests_scala_2():
         ],
         unused_dependency_checker_mode = "off",
         deps = [
-            "//third_party/dependency_analyzer/src/main:dependency_analyzer",
+            "//third_party/dependency_analyzer/src/main:dependency_analyzer" + suffix,
             "//third_party/utils/src/test:test_util",
-            "//scala/private/toolchain_deps:scala_compile_classpath",
+            "@io_bazel_rules_scala_scala_compiler" + suffix,
+            "@io_bazel_rules_scala_scala_library" + suffix,
+            "@io_bazel_rules_scala_scala_reflect" + suffix,
             "@org_apache_commons_commons_lang_3_5_without_file//:linkable_org_apache_commons_commons_lang_3_5_without_file",
         ],
     )

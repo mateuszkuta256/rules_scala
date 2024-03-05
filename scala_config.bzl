@@ -16,7 +16,7 @@ def _store_config(repository_ctx):
         repository_ctx.attr.scala_version,
     )
 
-    scala_versions = repository_ctx.attr.scala_versions
+    scala_versions = [scala_version]
 
     enable_compiler_dependency_tracking = repository_ctx.os.environ.get(
         "ENABLE_COMPILER_DEPENDENCY_TRACKING",
@@ -46,7 +46,6 @@ _config_repository = repository_rule(
         "scala_version": attr.string(
             mandatory = True,
         ),
-        "scala_versions": attr.string_list(mandatory = True),
         "enable_compiler_dependency_tracking": attr.bool(
             mandatory = True,
         ),
@@ -56,11 +55,9 @@ _config_repository = repository_rule(
 
 def scala_config(
         scala_version = _default_scala_version(),
-        scala_versions = [_default_scala_version()],
         enable_compiler_dependency_tracking = False):
     _config_repository(
         name = "io_bazel_rules_scala_config",
         scala_version = scala_version,
-        scala_versions = scala_versions,
         enable_compiler_dependency_tracking = enable_compiler_dependency_tracking,
     )

@@ -5,7 +5,6 @@ load(
 load(
     "@io_bazel_rules_scala_config//:config.bzl",
     "ENABLE_COMPILER_DEPENDENCY_TRACKING",
-    "SCALA_MAJOR_VERSION",
     "SCALA_VERSION",
 )
 
@@ -114,7 +113,7 @@ def _default_dep_providers():
         "@io_bazel_rules_scala//scala:scala_library_classpath_provider",
         "@io_bazel_rules_scala//scala:scala_macro_classpath_provider",
     ]
-    if SCALA_MAJOR_VERSION.startswith("2"):
+    if SCALA_VERSION.startswith("2"):
         dep_providers.append("@io_bazel_rules_scala//scala:semanticdb_provider")
     return dep_providers
 
