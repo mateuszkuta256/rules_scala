@@ -10,7 +10,6 @@ _SCALAC_DEPS = [
     "@io_bazel_rules_scala//src/java/io/bazel/rulesscala/worker",
     "@io_bazel_rules_scala//src/protobuf/io/bazel/rules_scala:diagnostics_java_proto",
     "//src/java/io/bazel/rulesscala/scalac/compileoptions",
-    "//src/java/io/bazel/rulesscala/scalac/reporter",
 ]
 
 def setup_scalac():
@@ -24,22 +23,33 @@ def _scalac(scala_version):
         name = "scalac_reporter" + suffix,
         srcs = _reporter_srcs(extract_major_version(scala_version), extract_minor_version(scala_version)),
         deps = [
-            "//scala/private/toolchain_deps:scala_compile_classpath",
-            "@io_bazel_rules_scala//src/protobuf/io/bazel/rules_scala:diagnostics_java_proto",
-            "@io_bazel_rules_scala//src/java/io/bazel/rulesscala/scalac/compileoptions",
             "@io_bazel_rules_scala//src/java/io/bazel/rulesscala/scalac/reporter:scala_deps_java_proto",
+            "//scala/private/toolchain_deps:scala_compile_classpath",
+            "//src/java/io/bazel/rulesscala/scalac/compileoptions",
+            "@io_bazel_rules_scala//src/protobuf/io/bazel/rules_scala:diagnostics_java_proto",
         ],
     )
     java_binary(
         name = "scalac" + suffix,
         srcs = _scalac_srcs(scala_version),
-        main_class = "io.bazel.rulesscala.scalac.ScalacWorker",
-        visibility = ["//visibility:public"],
         javacopts = [
             "-source 1.8",
             "-target 1.8",
         ],
-        deps = _SCALAC_DEPS + [":scalac_reporter" + suffix] + ["//third_party/dependency_analyzer/src/main/io/bazel/rulesscala/dependencyanalyzer/compiler:dep_reporting_compiler"] if ENABLE_COMPILER_DEPENDENCY_TRACKING and scala_version.startswith("2") else [],
+        main_class = "io.bazel.rulesscala.scalac.ScalacWorker",
+        visibility = ["//visibility:public"],
+        deps = (["//third_party/dependency_analyzer/src/main/io/bazel/rulesscala/dependencyanalyzer/compiler:dep_reporting_compiler"] if ENABLE_COMPILER_DEPENDENCY_TRACKING else []) + _SCALAC_DEPS + [":scalac_reporter" + suffix],
+    )
+    java_binary(
+        name = "scalac_bootstrap" + suffix,
+        srcs = _scalac_srcs(scala_version),
+        javacopts = [
+            "-source 1.8",
+            "-target 1.8",
+        ],
+        main_class = "io.bazel.rulesscala.scalac.ScalacWorker",
+        visibility = ["//visibility:public"],
+        deps = _SCALAC_DEPS + [":scalac_reporter" + suffix],
     )
 
 def _reporter_srcs(scala_major_version, scala_minor_version):

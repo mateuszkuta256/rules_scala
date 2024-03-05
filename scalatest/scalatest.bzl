@@ -2,7 +2,7 @@ load(
     "//scala:scala_cross_version.bzl",
     _default_maven_server_urls = "default_maven_server_urls",
 )
-load("//third_party/repositories:repositories.bzl", "repositories", "toolchain_repositories")
+load("//third_party/repositories:repositories.bzl", "toolchain_repositories")
 load("@io_bazel_rules_scala_config//:config.bzl", "SCALA_VERSIONS")
 
 _SCALATEST_DEPS = [

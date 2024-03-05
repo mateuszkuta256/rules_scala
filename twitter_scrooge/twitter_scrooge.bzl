@@ -7,8 +7,8 @@ load(
     "//scala/private:common.bzl",
     "write_manifest_file",
 )
-load("@io_bazel_rules_scala_config//:config.bzl", "ENABLE_COMPILER_DEPENDENCY_TRACKING", "SCALA_VERSIONS")
-load("@io_bazel_rules_scala//scala:scala_cross_version.bzl", "extract_major_version", "extract_minor_version", "version_suffix")
+load("@io_bazel_rules_scala_config//:config.bzl", "SCALA_VERSIONS")
+load("@io_bazel_rules_scala//scala:scala_cross_version.bzl", "version_suffix")
 load(
     "//scala/private:dependency.bzl",
     "legacy_unclear_dependency_info_for_protobuf_scrooge",
@@ -450,9 +450,7 @@ scrooge_scala_aspect = aspect(
         common_attrs,
         {
             "_scalac": attr.label_list(
-                default = [
-                    Label("@io_bazel_rules_scala//src/java/io/bazel/rulesscala/scalac"),
-                ] + [Label("@io_bazel_rules_scala//src/java/io/bazel/rulesscala/scalac:scalac" + version_suffix(version)) for version in SCALA_VERSIONS],
+                default = [Label("@io_bazel_rules_scala//src/java/io/bazel/rulesscala/scalac:scalac" + version_suffix(version)) for version in SCALA_VERSIONS],
             ),
         },
     ),
