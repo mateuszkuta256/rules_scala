@@ -19,9 +19,7 @@ def analyzer_tests_scala_2():
             "//third_party/dependency_analyzer/src/main:dependency_analyzer",
             "//third_party/dependency_analyzer/src/main:scala_version",
             "//third_party/utils/src/test:test_util",
-            "@io_bazel_rules_scala_scala_compiler",
-            "@io_bazel_rules_scala_scala_library",
-            "@io_bazel_rules_scala_scala_reflect",
+            "//scala/private/toolchain_deps:scala_compile_classpath",
         ],
     )
 
@@ -33,8 +31,7 @@ def analyzer_tests_scala_2():
         ],
         deps = [
             "//third_party/dependency_analyzer/src/main:scala_version",
-            "@io_bazel_rules_scala_scala_library",
-            "@io_bazel_rules_scala_scala_reflect",
+            "//scala/private/toolchain_deps:scala_compile_classpath",
         ],
     )
 
@@ -50,9 +47,7 @@ def analyzer_tests_scala_2():
             "//src/java/io/bazel/rulesscala/io_utils",
             "//third_party/dependency_analyzer/src/main:dependency_analyzer",
             "//third_party/utils/src/test:test_util",
-            "@io_bazel_rules_scala_scala_compiler",
-            "@io_bazel_rules_scala_scala_library",
-            "@io_bazel_rules_scala_scala_reflect",
+            "//scala/private/toolchain_deps:scala_compile_classpath",
         ],
     )
 
@@ -71,9 +66,7 @@ def analyzer_tests_scala_2():
             "//third_party/dependency_analyzer/src/main:dependency_analyzer",
             "//third_party/utils/src/test:test_util",
             "@com_google_guava_guava_21_0_with_file//jar",
-            "@io_bazel_rules_scala_scala_compiler",
-            "@io_bazel_rules_scala_scala_library",
-            "@io_bazel_rules_scala_scala_reflect",
+            "//scala/private/toolchain_deps:scala_compile_classpath",
             "@org_apache_commons_commons_lang_3_5_without_file//:linkable_org_apache_commons_commons_lang_3_5_without_file",
         ],
     )
@@ -91,9 +84,7 @@ def analyzer_tests_scala_2():
         deps = [
             "//third_party/dependency_analyzer/src/main:dependency_analyzer",
             "//third_party/utils/src/test:test_util",
-            "@io_bazel_rules_scala_scala_compiler",
-            "@io_bazel_rules_scala_scala_library",
-            "@io_bazel_rules_scala_scala_reflect",
+            "//scala/private/toolchain_deps:scala_compile_classpath",
             "@org_apache_commons_commons_lang_3_5_without_file//:linkable_org_apache_commons_commons_lang_3_5_without_file",
         ],
     )

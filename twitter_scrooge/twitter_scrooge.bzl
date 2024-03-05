@@ -7,6 +7,8 @@ load(
     "//scala/private:common.bzl",
     "write_manifest_file",
 )
+load("@io_bazel_rules_scala_config//:config.bzl", "ENABLE_COMPILER_DEPENDENCY_TRACKING", "SCALA_VERSIONS")
+load("@io_bazel_rules_scala//scala:scala_cross_version.bzl", "extract_major_version", "extract_minor_version", "version_suffix")
 load(
     "//scala/private:dependency.bzl",
     "legacy_unclear_dependency_info_for_protobuf_scrooge",
@@ -282,7 +284,7 @@ def _compile_generated_scala(
         expect_java_output = False,
         scalac_jvm_flags = [],
         scalacopts = ctx.toolchains["@io_bazel_rules_scala//scala:toolchain_type"].scalacopts,
-        scalac = ctx.executable._scalac,
+        scalac = ctx.attr._scalac[0].files_to_run,
         dependency_info = legacy_unclear_dependency_info_for_protobuf_scrooge(ctx),
         unused_dependency_checker_ignored_targets = [],
         additional_outputs = [],
@@ -447,11 +449,10 @@ scrooge_scala_aspect = aspect(
     attrs = dicts.add(
         common_attrs,
         {
-            "_scalac": attr.label(
-                executable = True,
-                cfg = "exec",
-                default = Label("@io_bazel_rules_scala//src/java/io/bazel/rulesscala/scalac"),
-                allow_files = True,
+            "_scalac": attr.label_list(
+                default = [
+                    Label("@io_bazel_rules_scala//src/java/io/bazel/rulesscala/scalac"),
+                ] + [Label("@io_bazel_rules_scala//src/java/io/bazel/rulesscala/scalac:scalac" + version_suffix(version)) for version in SCALA_VERSIONS],
             ),
         },
     ),

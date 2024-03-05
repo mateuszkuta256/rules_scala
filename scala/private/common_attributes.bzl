@@ -8,6 +8,8 @@ load(
     "@io_bazel_rules_scala//scala:plusone.bzl",
     _collect_plus_one_deps_aspect = "collect_plus_one_deps_aspect",
 )
+load("@io_bazel_rules_scala_config//:config.bzl", "ENABLE_COMPILER_DEPENDENCY_TRACKING", "SCALA_VERSIONS")
+load("@io_bazel_rules_scala//scala:scala_cross_version.bzl", "extract_major_version", "extract_minor_version", "version_suffix")
 
 common_attrs_for_plugin_bootstrapping = {
     "srcs": attr.label_list(allow_files = [
@@ -84,11 +86,10 @@ implicit_deps = {
     "_java_runtime": attr.label(
         default = Label("@bazel_tools//tools/jdk:current_java_runtime"),
     ),
-    "_scalac": attr.label(
-        executable = True,
-        cfg = "exec",
-        default = Label("@io_bazel_rules_scala//src/java/io/bazel/rulesscala/scalac"),
-        allow_files = True,
+    "_scalac": attr.label_list(
+        default = [
+            Label("@io_bazel_rules_scala//src/java/io/bazel/rulesscala/scalac"),
+        ] + [Label("@io_bazel_rules_scala//src/java/io/bazel/rulesscala/scalac:scalac" + version_suffix(version)) for version in SCALA_VERSIONS],
     ),
     "_exe": attr.label(
         executable = True,

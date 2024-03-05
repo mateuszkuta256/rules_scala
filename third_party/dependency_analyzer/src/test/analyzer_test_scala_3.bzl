@@ -21,7 +21,6 @@ def analyzer_tests_scala_3():
             "//scala/private/toolchain_deps:scala_compile_classpath",
             "//third_party/dependency_analyzer/src/main:dependency_analyzer",
             "//third_party/utils/src/test:test_util",
-            "@io_bazel_rules_scala_scala_library",
-            "@io_bazel_rules_scala_scala_library_2",
+            "//scala/private/toolchain_deps:scala_compile_classpath",
         ],
     )
