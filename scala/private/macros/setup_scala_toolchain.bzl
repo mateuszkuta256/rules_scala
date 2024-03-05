@@ -82,6 +82,7 @@ def setup_scala_toolchain(
         scala_compile_classpath,
         scala_library_classpath,
         scala_macro_classpath,
+        scala_version = SCALA_VERSION,
         scala_xml_deps = None,
         parser_combinators_deps = None,
         semanticdb_deps = None,
@@ -162,6 +163,7 @@ def setup_scala_toolchain(
         dep_providers = dep_providers,
         enable_semanticdb = enable_semanticdb,
         visibility = visibility,
+        scala_version = scala_version,
         **kwargs
     )
 

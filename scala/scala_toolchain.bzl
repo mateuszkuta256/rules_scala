@@ -6,6 +6,7 @@ load(
     "@io_bazel_rules_scala_config//:config.bzl",
     "ENABLE_COMPILER_DEPENDENCY_TRACKING",
     "SCALA_MAJOR_VERSION",
+    "SCALA_VERSION",
 )
 
 def _compute_strict_deps_mode(input_strict_deps_mode, dependency_mode):
@@ -101,6 +102,7 @@ def _scala_toolchain_impl(ctx):
         enable_semanticdb = ctx.attr.enable_semanticdb,
         semanticdb_bundle_in_jar = ctx.attr.semanticdb_bundle_in_jar,
         use_argument_file_in_runner = ctx.attr.use_argument_file_in_runner,
+        scala_version = ctx.attr.scala_version,
     )
     return [toolchain]
 
@@ -172,6 +174,9 @@ scala_toolchain = rule(
         "use_argument_file_in_runner": attr.bool(
             default = False,
             doc = "Changes java binaries scripts (including tests) to use argument files and not classpath jars to improve performance, requires java > 8",
+        ),
+        "scala_version": attr.string(
+            default = SCALA_VERSION,
         ),
     },
     fragments = ["java"],
