@@ -106,7 +106,7 @@ def make_scala_library(*extras):
         toolchains = [
             "@io_bazel_rules_scala//scala:toolchain_type",
             "@bazel_tools//tools/jdk:toolchain_type",
-        ],
+        ] + (["@io_bazel_rules_scala//scala/scalafmt/toolchain:scalafmt_toolchain_type"] if hasattr(extras, "format") else []),
         cfg = scala_version_transition,
         incompatible_use_toolchain_transition = True,
         implementation = _scala_library_impl,
@@ -204,7 +204,7 @@ def make_scala_library_for_plugin_bootstrapping(*extras):
         toolchains = [
             "@io_bazel_rules_scala//scala:toolchain_type",
             "@bazel_tools//tools/jdk:toolchain_type",
-        ],
+        ] + (["@io_bazel_rules_scala//scala/scalafmt/toolchain:scalafmt_toolchain_type"] if hasattr(extras, "format") else []),
         cfg = scala_version_transition,
         incompatible_use_toolchain_transition = True,
         implementation = _scala_library_for_plugin_bootstrapping_impl,
@@ -279,7 +279,7 @@ def make_scala_macro_library(*extras):
         toolchains = [
             "@io_bazel_rules_scala//scala:toolchain_type",
             "@bazel_tools//tools/jdk:toolchain_type",
-        ],
+        ] + (["@io_bazel_rules_scala//scala/scalafmt/toolchain:scalafmt_toolchain_type"] if hasattr(extras, "format") else []),
         cfg = scala_version_transition,
         incompatible_use_toolchain_transition = True,
         implementation = _scala_macro_library_impl,

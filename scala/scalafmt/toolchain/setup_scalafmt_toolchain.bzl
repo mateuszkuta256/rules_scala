@@ -1,7 +1,7 @@
 load("//scala/scalafmt/toolchain:toolchain.bzl", "scalafmt_toolchain")
 load("//scala:providers.bzl", "declare_deps_provider")
 load("@io_bazel_rules_scala//scala:scala_cross_version.bzl", "sanitize_version", "version_suffix")
-load("@io_bazel_rules_scala_config//:config.bzl", "SCALA_VERSIONS")
+load("@io_bazel_rules_scala_config//:config.bzl", "SCALA_VERSION", "SCALA_VERSIONS")
 
 _SCALAFMT_DEPS = [
     "@com_geirsson_metaconfig_core",
@@ -33,6 +33,7 @@ def setup_scalafmt_toolchain(
         name = name,
         toolchain = ":%s_impl" % name,
         toolchain_type = "//scala/scalafmt/toolchain:scalafmt_toolchain_type",
+        target_settings = ["@io_bazel_rules_scala_config//:" + sanitize_version(scala_version)] if scala_version != SCALA_VERSION else [],
         visibility = visibility,
     )
 

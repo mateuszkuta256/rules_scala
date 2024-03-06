@@ -1,7 +1,7 @@
 load("@io_bazel_rules_scala//scala:providers.bzl", "declare_deps_provider")
 load("@io_bazel_rules_scala_config//:config.bzl", "SCALA_VERSION", "SCALA_VERSIONS")
 load("@io_bazel_rules_scala//testing/toolchain:toolchain.bzl", "scala_testing_toolchain")
-load("@io_bazel_rules_scala//scala:scala_cross_version.bzl", "version_suffix")
+load("@io_bazel_rules_scala//scala:scala_cross_version.bzl", "sanitize_version", "version_suffix")
 
 _SPECS2_DEPS = [
     "@io_bazel_rules_scala_org_specs2_specs2_common",
@@ -46,7 +46,7 @@ def _declare_deps_provider(macro_name, deps_id, deps, visibility):
 
 def setup_scala_testing_toolchain(
         name,
-        scala_version = None,
+        scala_version = SCALA_VERSION,
         junit_classpath = None,
         specs2_classpath = None,
         specs2_junit_classpath = None,
@@ -104,6 +104,7 @@ def setup_scala_testing_toolchain(
         name = name,
         toolchain = ":" + name + "_impl",
         toolchain_type = "@io_bazel_rules_scala//testing/toolchain:testing_toolchain_type",
+        target_settings = ["@io_bazel_rules_scala_config//:" + sanitize_version(scala_version)] if scala_version != SCALA_VERSION else [],
         visibility = visibility,
     )
 
