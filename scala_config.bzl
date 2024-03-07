@@ -16,8 +16,7 @@ def _config_setting(scala_version):
         "config_setting(",
         "    name = \"{name}\",",
         "    flag_values = {{\":scala_version\": \"{version}\"}},",
-        ")",
-        "",
+        ")\n",
     ]).format(name = sanitize_version(scala_version), version = scala_version)
 
 def _config_settings(scala_versions):
